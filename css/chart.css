@@ -1,0 +1,27 @@
+@charset "utf-8";
+/* CSS Document */
+
+.body{
+	background: #A8A8A8;
+}
+
+.div{
+	width: 96%;
+	background-color: #E1E1E1;
+	float: right;
+	align-content: center;
+}
+
+.titlu{ 
+	margin-top: 30px;
+	font-size: 30px;
+	font-family: "Poppins" , sans-serif;
+	color: #252525; 
+}
+.columns{
+	margin-top: 3%;
+}
+
+.col{
+	width: 450px;
+}

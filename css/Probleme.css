@@ -1,0 +1,310 @@
+@charset "utf-8";
+/* CSS Document */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
+.body{
+	background: #9F9F9F;
+}
+
+
+#probleme{
+	cursor: pointer;
+	margin: 0 auto;
+	border:2px solid #1B1B1B;
+	border-collapse: collapse;
+	background: #1B1B1B;
+	color: #DDDDDD;
+	text-align: center;
+	width: 100%;
+	height: 70px;
+}
+
+sup{
+	font-size:12px;
+}
+
+sub{
+	font-size:12px;
+} 
+
+.imagine{
+	margin-top: 5px;
+	height: 23px;
+	width: 23px;
+}
+
+.buttonTop{
+	border:none;
+	background: #2E2E2E;
+	color:aliceblue;
+ 	height: 52px;
+ 	font-size: 18px;
+	width: 100%;
+	border-radius: 12px;
+}
+
+.middle{
+	width: 96%;
+	background-color: #E1E1E1;
+	height: 100%;
+	float: right;
+	align-content: center;
+}
+
+.titlu2 {
+	margin-top: 4%;
+	background-clip: text;
+	font-size: 36px;
+	color: #1E1E1E; 
+}
+
+
+.subtitlu{
+	text-align: left;
+	margin-top: 3%;
+	font-size: 26px;
+	font-family: "Poppins" , sans-serif;
+	color: #252525; 
+}
+
+
+.subtitlu2{
+	text-align: left;
+	font-size: 22px;
+	font-family: "Poppins" , sans-serif;
+	color: #252525; 
+}
+
+.enunt{
+	text-align:left;
+	font-size: 20px;
+	font-family: "Poppins" , sans-serif;
+	color: #252525; 
+}
+
+
+.diviziune{
+	width: 72%;
+	margin: 0 auto;
+}
+
+.diviziune2{
+	width: 96%;
+	margin: 0 auto;
+	height: 1000px;
+}
+
+.lista {
+	margin-top: 0.8%;
+}
+
+.lista1{
+	margin-left: 5%;
+	margin-top: 0.8%;
+}
+
+.lista2{
+	margin-left: 10%;
+	margin-top: 0.8%;
+}
+
+.lista3{
+	margin-left: 15%;
+	margin-top: 0.8%;
+}
+
+.paragraf{
+	margin-top: 1%;
+	color: #222222; 
+	font-size: 17px; 
+	line-height: 20px; 
+	text-align: justify;
+	font-family: "Poppins" , sans-serif;
+}
+
+
+.box{
+	display: inline-block;
+	height: 23px;
+	font-family: 'Gabriela', serif;
+	color: #D6365F;
+	font-size: 18px;
+	border-radius: 6px;
+	background: #F2DCE3;
+}
+
+.pink{
+	height: 23px;
+	font-family: 'Gabriela', serif;
+	color: #B32449;
+	font-size: 22px;
+}
+
+.box2{
+	display: inline-block;
+	height: 23px;
+	font-family: 'Gabriela', serif;
+	color: #D6365F;
+	font-size: 18px;
+	background: #F2DCE3;
+	border-top: 1px solid #D01561;
+}
+
+.info{
+	border: 2px solid #5C0FBC; 
+	border-left:10px solid #5C0FBC;
+	border-collapse: collapse;
+	background: #DDDDDD;
+	padding: 2%;
+	color: #252525; 
+	font-size: 18px; 
+	line-height: 22px; 
+	text-align: justify;
+	font-family: "Consolas" , sans-serif;
+}
+
+
+.warning{
+	border: 2px solid #004CFF;
+	border-left:10px solid #004CFF;
+	border-collapse: collapse;
+	background: #DDDDDD;
+	padding: 2%;
+	color: #252525; 
+	font-size: 18px; 
+	line-height: 22px; 
+	text-align: justify;
+	font-family: "Consolas" , sans-serif;
+}
+
+pre {
+    white-space: pre-wrap;       /* Since CSS 2.1 */
+    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
+} 
+
+
+.cod {
+	border: 2px solid black; 
+	border-collapse: collapse;
+	background: #373737;
+	padding: 1.2%;
+	color: #E3E3E3; 
+	font-size: 16px; 
+	line-height: 22px; 
+	text-align: justify;
+	font-family: "Consolas" , sans-serif;
+}
+
+.codleft{
+	margin-bottom: 20px;
+	float: left;
+	width: 48%;
+	border: 2px solid black; 
+	border-collapse: collapse;
+	background: #373737;
+	padding: 1.2%;
+	color: #E3E3E3; 
+	font-size: 16px; 
+	line-height: 22px; 
+	text-align: justify;
+	font-family: "Consolas" , sans-serif;
+}
+
+.codright{
+	float: right;
+	width: 48%;
+	border: 2px solid black; 
+	border-collapse: collapse;
+	background: #373737;
+	padding: 1.2%;
+	color: #E3E3E3; 
+	font-size: 16px; 
+	line-height: 22px; 
+	text-align: justify;
+	font-family: "Consolas" , sans-serif;
+}
+
+.white{
+	color: white; 
+	font-size: 16px; 
+	line-height: 22px; 
+	text-align: justify;
+	font-family: "Consolas" , sans-serif;
+}
+
+.yellow{
+	color: #FFFEA5; 
+	font-size: 16px; 
+	line-height: 22px; 
+	text-align: justify;
+	font-family: "Consolas" , sans-serif;
+}
+
+.blue{
+	color: #637CEE; 
+	font-size: 16px; 
+	line-height: 22px; 
+	text-align: justify;
+	font-family: "Consolas" , sans-serif;
+}
+
+.blueLight{
+	color: #15C6E2; 
+	font-size: 16px; 
+	line-height: 22px; 
+	text-align: justify;
+	font-family: "Consolas" , sans-serif;
+}
+
+.purple{
+	color: #B750ED; 
+	font-size: 16px; 
+	line-height: 22px; 
+	text-align: justify;
+	font-family: "Consolas" , sans-serif;
+}
+
+.green{
+	color: #378E22; 
+	font-size: 16px; 
+	line-height: 22px; 
+	text-align: justify;
+	font-family: "Consolas" , sans-serif;
+}
+
+.greenLight{
+	color: #72DD8E; 
+	font-size: 16px; 
+	line-height: 22px; 
+	text-align: justify;
+	font-family: "Consolas" , sans-serif;
+}
+
+.orange{
+	color: #F3947E; 
+	font-size: 16px; 
+	line-height: 22px; 
+	text-align: justify;
+	font-family: "Consolas" , sans-serif;
+}
+
+
+table {
+	margin: 0 auto;
+ 	border-collapse: collapse;
+ 	width: 100%;
+	
+}
+
+tr{
+	border: 1px solid #474747;
+}
+
+ th, td {
+ 	padding: 7px;
+ 	text-align: left;
+}
+

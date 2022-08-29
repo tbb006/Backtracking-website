@@ -1,0 +1,388 @@
+<!doctype html>
+<html>
+<head>
+	<title>Permutări</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/Probleme.css">
+	  <link rel="stylesheet" href="css/sidebar2.css">
+	  
+    <!-- Boxicons Link -->
+    <link href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+	
+	
+<div class="middle" align="center">
+	
+	
+	<table id="probleme">
+		<tr>
+			<td><a href="Permutari.html"><button class="buttonTop">Generare permutări</button> </a></td>
+			<td> <a href="Aranjamente.html"><button class="buttonTop">Generare aranjamente</button></a></td>
+			<td> <a href="Combinari.html"><button class="buttonTop">Generare combinări</button></a></td>
+			<td><a href="Submultimi.html"><button class="buttonTop">Generare submulțimi</button></a></td>
+		</tr>
+	</table>
+	
+	<div class="titlu2">Generarea permutărilor</div>
+	<!-- Introducere -->
+	<div class="diviziune">
+		<br><br>
+		<div class="subtitlu">Introducere</div>
+		<div class="paragraf">
+			<p>
+				Prin permutare a unei mulțimi înțelegem o aranjare a elementelor sale, într-o anumită ordine. Este cunoscut, printre altele, faptul că numărul de permutări ale unei mulțimi cu n elemente este <b class="box">P<sub>n</sub>=n!=1*2*...*n</b>. Prin convenție, <b class="box">P<sub>0</sub>=0!=1</b>.
+				<br>
+				<div class="subtitlu"><u>Problema</u></div>
+				<br>
+				<span class="enunt">
+				Fie un număr natural <b class="box">&nbsp;n &nbsp; </b>. Să se afișeze, în ordine lexicografică, permutările mulțimii <b class="box">{1,2,,...,n}</b>.
+				</span>
+				<br>
+				<div class="subtitlu">Exemplu</div>
+				<br>
+					Pentru <b class="box">&nbsp;n=3 &nbsp; </b>, se va afișa:
+				<br><br>
+<pre><p class="cod" contentEditable="true">1 2 3
+1 3 2
+2 1 3
+2 3 1
+3 1 2
+3 2 1</p></pre>			
+				<br>
+				<div class="subtitlu">Rezolvare</div>
+			<br><br>
+					Bineînțeles, vom rezolva problema prin metoda backtracking. Vectorul soluție <b class="box">&nbsp;x[ ]&nbsp; </b> va reprezenta o permutare candidat. Să ne gândim care sunt proprietățile unei permutări, pe care le va respecta și vectorul <b class="box">&nbsp;x[ ]&nbsp; </b>:
+					<br><br>
+					<ul>
+						<li class="lista1">elementele sunt numere naturale cuprinse între <b class="box">&nbsp;1&nbsp; </b> și <b class="box">&nbsp;n &nbsp; </b>;</li>
+						<li class="lista1">elementele nu se repetă; </li>
+						<li class="lista1">vectorul <b class="box">&nbsp;x[ ]&nbsp; </b> se construiește pas cu pas, element cu element. El va conține o permutare validă când va conține n elemente, desigur corecte. </li>
+					</ul>
+					<br><br>
+					Cele observate mai sus ne permit să precizăm condițiile specifice algoritmului backtracking, într-un mod mai formal:
+					<br><br>
+					<ul>
+						<li class="lista1"> <b>condiții externe:</b> <b class="box">x[k] ∈ {1,2,...,n}</b> </li>
+						<li class="lista1"> <b>condiții interne:</b> <b class="box">x[k] ∉ {x[1],x[2],...,x[k−1]}</b>, pentru <b class="box">k ∈ {2,3,...,n}</b></li>
+						<li class="lista1"> <b>condiții de existență a soluției:</b> <b class="box">k = n</b></li>
+					</ul>
+					<br>
+					<div class="subtitlu">IV. Algoritm C++</div>
+					<br>
+          Următorul program afișează pe ecran permutările, folosind un algoritm recursiv:
+					<br><br>
+<pre><p class="cod" contentEditable="true"><span class="purple">#include</span> <span class="orange">&lt;iostream&gt;</span>
+<span class="purple">using</span> <span class="blue">namespace</span> <span class="greenLight">std</span>;
+
+<span class="blue">int</span> <span class="blueLight">x</span>[10] ,n;
+
+<span class="blue">void</span> <span class="yellow">Afis</span>()
+{
+    <span class="purple">for</span>( <span class="blue">int</span> j=1;j&lt;=n;j++)
+        cout&lt;&lt;<span class="blueLight">x</span>[j]&lt;&lt;<span class="orange">&quot; &quot;</span>;
+    cout&lt;&lt;endl;
+}
+
+<span class="blue">bool</span> <span class="yellow">OK</span>(<span class="blue">int</span> <span class="blueLight">k</span>){
+    <span class="purple">for</span>(<span class="blue">int</span> i=1;i&lt;k;++i)
+        if(<span class="blueLight">x</span>[k]==<span class="blueLight">x</span>[i])
+            <span class="purple">return</span> <span class="blue">false</span>;
+    <span class="purple">return</span> <span class="blue">true</span>;
+}
+
+<span class="blue">bool</span> <span class="yellow">Solutie</span>(int <span class="blueLight">k</span>)
+{
+    <span class="purple">return</span> k == n;
+}
+
+<span class="blue">void</span> <span class="yellow">back</span>(<span class="blue">int</span> <span class="blueLight">k</span>){
+    <span class="purple">for</span>(<span class="blue">int</span> i = 1 ; i &lt;= n ; ++i)
+    {
+        <span class="blueLight">x</span>[k]=i;
+        <span class="purple">if</span>( <span class="yellow">OK</span>(k) )
+            <span class="purple">if</span>(<span class="yellow">Solutie</span>(k))
+                <span class="yellow">Afis</span>(k);
+            <span class="purple">else</span>
+                <span class="yellow">back</span>(k+1);
+    }
+}
+<span class="blue">int</span> <span class="yellow">main</span>(){
+    cin&gt;&gt;n;
+    <span class="yellow">back</span>(1);
+    <span class="purple">return</span> 0;
+}</p></pre>
+					
+					<br>
+					<div class="subtitlu">Semnificația funcțiilor</div>
+					<br>
+					<ul>
+						<li class="lista1"> <b class="box">void Afis();</b> afișează soluția curentă. Când se apelează, vectorul soluție <b class="box">&nbsp; x &nbsp;</b> are <b class="box">&nbsp;n&nbsp;</b> elemente, reprezentând o permutare completă;</li>
+						<li class="lista1"> <b class="box">bool OK(int k);</b> verifică condițiile interne. La apel, <b class="box">&nbsp;x[k]&nbsp;</b> tocmai a primit o valoare conform condițiilor externe. Prin funcția <b class="box">OK()</b> se va verifica dacă această valoare este validă;</li>
+						<li class="lista1"> <b class="box">bool Solutie(int k); </b>verifică dacă avem o soluție completă. Acest lucru se întâmplă când permutarea este completă – am dat o valoare corectă ultimului element al tabloului, <b class="box">&nbsp;x[n]&nbsp;</b>, adică atunci când <b class="box">&nbsp;k=n;&nbsp;</b></li>
+						<li class="lista1"> <b class="box">void back(int k);</b> – apelul acestei funcții dă valori posibile elementului <b class="box">&nbsp;x[x]&nbsp;</b> al vectorului soluție și le verifică:
+						</li>
+						<ul type="circle">
+							<li class="lista2"> se parcurg valorile pe care le pot lua elementele vectorului, conform condițiilor externe (în acest caz, <b class="box">&nbsp;1..n&nbsp;</b>);</li>
+								<ul type="square">
+								<li class="lista3"> se memorează în <b class="box">&nbsp;x[k]&nbsp;</b> valoarea curentă;</li>
+								<li class="lista3"> dacă valoarea lui <b class="box">&nbsp;x[k]&nbsp;</b> este corectă, conform condițiilor interne, se verifică dacă avem o soluție completă. În caz afirmativ se afișează această soluție, în caz contrar se trece la următorul element, prin apelul recursiv;</li>
+								</ul>
+							<li class="lista2"> la finalul parcurgerii, se revine la elementul anterior al vectorului <b class="box">&nbsp;x&nbsp;</b>, prin revenirea din apelul recursiv.</li>
+						</ul>
+					</ul>
+			
+					<br>
+					<div class="subtitlu">Observații</div>
+					<br>
+					<ul>
+						<li class="lista1"> generarea valorilor din vectorul soluție începe cu primul element al acestuia, <b class="box">x[ 1 ]</b>; în consecință, apelul principal al funcției <b class="box">back()</b> este <b class="box">back(1)</b>;</li>
+						<li class="lista1"> generarea permutărilor în ordine lexicografică se obține datorită faptului că, în funcția <b class="box">back(</b>) valorile posibile pe care le primește <b class="box">x[k]</b> sunt parcurse în ordine crescătoare (<b class="box">for(int i=1 ; i≤n ; ++i)</b>). Dacă am fi parcurs valorile de la <b class="box">&nbsp;n&nbsp;</b> la <b class="box">&nbsp;1&nbsp;</b>, s-ar fi generat permutările în ordine invers lexicografică;</li>
+						<li class="lista1"> algoritmul este exponențial și poate fi folosit numai pentru valori mici ale lui <b class="box">&nbsp;n&nbsp;</b>. O soluție ceva mai bună se poate obține dacă, pentru a stabili corectitudinea condițiilor interne, evităm parcurgerea elementelor deja memorate în vectorul soluție. Acest lucru poate fi realizat prin intermediul unui vector caracteristic, cu semnificația: <b class="box">v[p] = 1</b> dacă valoarea <b class="box">&nbsp; p &nbsp;</b> face deja parte din permutare, și <b class="box">v[p]=0</b> dacă <b class="box">&nbsp;p&nbsp;</b> nu face parte din permutare.</li>
+					</ul>
+
+					<br>
+					<div class="subtitlu">Varianta iterativă</div>
+					<br>
+					În general, algoritmii nerecursivi sunt mai buni decât cei recursivi, deși uneori sunt mai dificil de urmărit. Următorul program iterativ afișează și el permutările pe ecran:
+					<br><br>
+<pre><p class="cod" contentEditable="true"><span class="purple">#include</span> <span class="orange">&lt;iostream&gt;</span>
+<span class="purple">using</span> <span class="blue">namespace</span> <span class="greenLight">std</span>;
+
+<span class="blue">int</span> <span class="blueLight">x</span>[100] ,n;
+
+<span class="blue">void</span> <span class="yellow">afisare</span>(<span class="blue">int</span> <span class="blueLight">k</span>){
+    <span class="purple">for</span>( <span class="blue">int</span> i=1;i&lt;=n;i++)
+        cout&lt;&lt;<span class="blueLight">x</span>[i]&lt;&lt;<span class="orange">&quot; &quot;</span>;
+    cout&lt;&lt;endl;
+}
+
+<span class="blue">bool</span> <span class="yellow">OK</span>(<span class="blue">int</span> <span class="blueLight">k</span>){
+    <span class="purple">for</span>(<span class="blue">int</span> i=1;i&lt;k;i++)
+        if(<span class="blueLight">x</span>[k]==<span class="blueLight">x</span>[i])
+            <span class="purple">return</span> <span class="blue">0</span>;
+    <span class="purple">return</span> <span class="blue">1</span>;
+}
+
+<span class="blue">void</span> <span class="yellow">back</span>(){
+    <span class="blue">int</span> k = 1;
+    <span class="blueLight">x</span>[1] = 0;
+    <span class="purple">while</span>(k &gt; 0)
+    {
+        <span class="blue">bool</span> gasit = <span class="blue">false</span>;
+        <span class="purple">do</span>{
+            <span class="blueLight">x</span>[k] ++;
+            <span class="purple">if</span>(<span class="blueLight">x</span>[k] &lt;= n &amp;&amp; <span class="yellow">OK</span>(k))
+                gasit = <span class="blue">true</span>;
+        }
+        <span class="purple">while</span>(! gasit &amp;&amp; <span class="blueLight">x</span>[k] &lt;= n);
+        <span class="purple">if</span>(! gasit)
+            k --;
+        <span class="purple">else</span>
+            <span class="purple">if</span>(k &lt; n)
+            {
+                k ++;
+                <span class="blueLight">x</span>[k] = 0;
+            }
+            <span class="purple">else</span>
+                <span class="yellow">afisare</span>(k);
+
+    }
+}
+<span class="blue">int</span> <span class="yellow">main</span>(){
+    cin&gt;&gt;n;
+    <span class="yellow">back</span>();
+    <span class="purple">return</span> 0;
+}</p></pre>
+			
+					<br>
+					<div class="subtitlu">O variantă (puțin) mai bună</div>
+					<br><br>
+					Algoritmul de generarea a permutărilor este unul exponențial, deci lent. Totuși, poate fi ușor îmbunățit în ceea ce privește verificarea condițiilor interne. Acestea cer ca valoarea curentă a lui <b class="box">x[k]</b> (elementul care se generează) să nu se repete. În varianta anterioară am parcurs elementele care îl preced și le-am comparat cu <b class="box">x[k]</b>.
+					<br><br>			
+					Această parcurgere poate fi evitată dacă folosim un vector caracteristic, <b class="box">uz[ ]</b>, cu următorul înțeles:
+					<br><br> 
+					<b class="box">UZ[V]= </b>
+					<br>
+					<ul><span class="pink">
+						<li class="lista1">1 - dacă valoarea v a fost plasată deja în vectorul soluție, </li>
+						<li class="lista1">0 -  dacă valoarea v nu a fost plasată încă în vectorul soluție</li>
+					</span></ul>
+					<br>
+					Următoarele programe folosesc această idee. Primul respectă schema anterioară, în timp ce al doilea este mai scurt – verificarea condițiilor interne și a celor de existență a soluției făcându-se în în funcția <b class="box">back()</b>, fără a mai scrie funcții de sine stătătoare:
+			<br><br>
+			</p>	
+		
+	</div>
+<div class="diviziune2">
+<pre><p class="codleft" contentEditable="true"><span class="purple">#include</span> <span class="orange">&lt;iostream&gt;</span>
+<span class="purple">using</span> <span class="blue">namespace</span> <span class="greenLight">std</span>;
+
+<span class="blue">int</span> <span class="blueLight">x</span>[10] ,n, p,  <span class="blueLight">uz</span>[10];
+
+<span class="blue">void</span> <span class="yellow">Afis</span>(<span class="blue">int</span> <span class="blueLight">k</span>)
+{
+    <span class="purple">for</span>( <span class="blue">int</span> j=1;j&lt;=n;j++)
+        cout&lt;&lt;<span class="blueLight">x</span>[j]&lt;&lt;<span class="orange">&quot; &quot;</span>;
+    cout&lt;&lt;endl;
+}
+
+<span class="blue">bool</span> <span class="yellow">OK</span>(<span class="blue">int</span> <span class="blueLight">k</span>){
+    <span class="purple">return</span> <span class="blueLight">uz</span>[<span class="blueLight">x</span>[k]] == 0;
+}
+
+<span class="blue">bool</span> <span class="yellow">Solutie</span>(<span class="blue">int</span> <span class="blueLight">k</span>)
+{
+    <span class="purple">return</span> k == n;
+}
+
+<span class="blue">void</span> <span class="yellow">back</span>(<span class="blue">int</span> <span class="blueLight">k</span>){
+    <span class="purple">for</span>(<span class="blue">int</span> i = 1 ; i &lt;= n ; i++){
+        <span class="blueLight">x</span>[k]=i;
+        <span class="purple">if</span>( <span class="yellow">OK</span>(k)){
+		<span class="blueLight">uz</span>[i] = 1;
+            <span class="purple">if</span>(<span class="yellow">Solutie</span>(k))
+                <span class="yellow">Afis</span>(k);
+            <span class="purple">else</span>
+                <span class="yellow">back</span>(k+1);
+	<span class="blueLight">uz</span>[i] = 0;
+    	} 
+}
+<span class="blue">int</span> <span class="yellow">main</span>(){
+    cin&gt;&gt;n;
+    <span class="yellow">back</span>(1);
+    <span class="purple">return</span> 0;
+}</p></pre>	
+	
+	
+<pre><p class="codright" contentEditable="true"><span class="purple">#include</span> <span class="orange">&lt;iostream&gt;</span>
+<span class="purple">using</span> <span class="blue">namespace</span> <span class="greenLight">std</span>;
+
+<span class="blue">int</span> <span class="blueLight">x</span>[10] ,n, p,  <span class="blueLight">uz</span>[10];
+
+<span class="blue">void</span> <span class="yellow">Afis</span>(<span class="blue">int</span> <span class="blueLight">k</span>)
+{
+    <span class="purple">for</span>( <span class="blue">int</span> j=1;j&lt;=n;j++)
+        cout&lt;&lt;<span class="blueLight">x</span>[j]&lt;&lt;<span class="orange">&quot; &quot;</span>;
+    cout&lt;&lt;endl;
+}
+
+<span class="blue">void</span> <span class="yellow">back</span>(<span class="blue">int</span> <span class="blueLight">k</span>){
+	<span class="purple">for</span>(<span class="blue">int</span> i = 1 ; i &lt;= n ; i++)
+		<span class="purple">if</span>( <span class="blueLight">uz</span>[i] == 0){
+		<span class="blueLight">x</span>[k]=i;
+		<span class="blueLight">uz</span>[i] = 1;
+		<span class="purple">if</span>(k == n)
+			<span class="yellow">Afis</span>(k);
+		<span class="purple">else</span>
+			<span class="yellow">back</span>(k+1);
+		<span class="blueLight">uz</span>[i] = 0;
+		} 
+}
+
+<span class="blue">int</span> <span class="yellow">main</span>(){
+    cin&gt;&gt;n;
+    <span class="yellow">back</span>(1);
+    <span class="purple">return</span> 0;
+}</p></pre>	
+	
+</div>	
+	
+
+	<div class="subtitlu">Probleme propuse</div>
+	<br><br>
+	<div class="enunt">
+	<ol type="1">
+		<li class="lista1"> Se citeşte un număr natural nenul <b class="box">&nbsp;n&nbsp;</b>. Să se afişeze, în ordine lexicografică, permutările mulţimii <b class="box">{1,2,..,n}</b>.</li>
+		<li class="lista1"> Se citeşte un număr natural nenul <b class="box">&nbsp;n&nbsp;</b>. Să se afişeze, în ordine invers lexicografică, permutările mulţimii <b class="box">{1,2,..,n}</b>.</li>
+		<li class="lista1"> Se citeşte un număr natural nenul <b class="box">&nbsp;n&nbsp;</b>, apoi <b class="box">&nbsp;n&nbsp;</b> numere naturale distincte. Să se afişeze, în ordine lexicografică, permutările mulţimii formate din cele <b class="box">n&nbsp;</b> numere citite.</li>
+		<li class="lista1"> Se citeşte un număr natural nenul <b class="box">&nbsp;n&nbsp;</b>, apoi <b class="box">&nbsp;n&nbsp;</b> numere naturale distincte. Să se afişeze, în ordine lexicografică, șirurile din cele <b class="box">n&nbsp;</b> valori cu proprietatea că oricare două valori învecinate sunt prime între ele.</li>
+	</ol></div>	
+<br><br><br>			
+					
+	</div>	
+</div>	<!-- Inchidere diviziune -->	
+
+	
+<div id="mybutton">
+<a href="#probleme"><button class="arrow"></button></a>
+</div>	
+	
+<nav>
+	
+	<! -- sidebar -->
+  <div class="sidebar">
+    <div class="logo-details">
+        <div class="logo_name">Backtracking</div>
+        <i class="bx bx-menu" id="btn" ></i>
+    </div>
+    <ul class="nav-list">
+      <li>
+        <a href="Principala.html">
+          <i class="bx bx-home"></i>
+          <span class="links_name">Acasă</span>
+        </a>
+         <span class="tooltip">Acasă</span>
+      </li>
+      <li>
+       <a href="Algoritm.html">
+         <i class="bx bx-notepad" ></i>
+         <span class="links_name">Algoritm</span>
+       </a>
+       <span class="tooltip">Algoritm</span>
+     </li>
+     <li>
+       <a href="Permutari.html">
+         <i class="bx bx-pencil" ></i>
+         <span class="links_name">Exerciții</span>
+       </a>
+       <span class="tooltip">Exerciții</span>
+     </li>
+     <li>
+       <a href="ProblemaDamelor.html">
+         <i class="bx bx-code-alt" ></i>
+         <span class="links_name">Aplicație</span>
+       </a>
+       <span class="tooltip">Aplicație</span>
+     </li>
+     <li>
+       <a href="ProblemaDamelorJavaScript.html">
+         <i class="bx bxl-javascript" type="logo" ></i>
+         <span class="links_name">JavaScript</span>
+       </a>
+       <span class="tooltip">JavaScript</span>
+     </li>
+     <li>
+       <a href="Test.html">
+         <i class="bx bx-edit" ></i>
+         <span class="links_name">Test</span>
+       </a>
+       <span class="tooltip">Test</span>
+     </li> 
+     <li>
+       <a href="Sudoku.html">
+         <i class="bx bx-game" ></i>
+         <span class="links_name">Sudoku</span>
+       </a>
+       <span class="tooltip">Sudoku</span>
+     </li> 
+     <li>
+      <a href="PieChart.html">
+        <i class="bx bx-bar-chart-square" ></i>
+        <span class="links_name">Grafice</span>
+      </a>
+      <span class="tooltip">Grafice</span>
+    </li>
+    </ul>
+  </div>
+	
+</nav>
+	
+<script src="js/sidebar.js"></script>
+	
+</body>
+</html>
+
+

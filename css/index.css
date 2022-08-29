@@ -1,0 +1,88 @@
+@charset "utf-8";
+/* CSS Document */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
+.body{
+	background: #272727;
+}
+
+
+.middle{
+	display: fixed;
+	background-color: #272727;
+	min-height: 970px;
+	width: 100%;
+	
+}
+
+
+.dreapta{
+	display: flex;
+	background-color: #272727;
+	min-height: 970px;
+	float: right;
+	width: 50%;
+}
+
+.imagine{
+	width: 60%;
+	margin-left: 200px;
+	margin-bottom: 200px;
+	max-width: 100%;
+}
+
+
+.stanga{
+	display: flex;
+	background-color: #272727;
+	float: left;
+	width: 50%;
+  	min-height: 970px;
+}
+
+.box{
+	float: left;
+	margin-left: 27%;
+	margin-top: 10rem;
+}
+
+.paragraf{
+	float: left;
+	width: 100%;
+	margin-top: 4rem;
+	color: #E7E7E7; 
+	font-size: 18px; 
+	line-height: 20px; 
+	text-align: justify;
+	font-family: "Poppins" , sans-serif;
+}
+
+.divTitlu{
+	width: 100%;
+	height: 50%;
+}
+
+
+titlu {
+  background: 50% 100% / 50% 50% no-repeat
+              radial-gradient(ellipse at bottom, #fff, transparent, transparent);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-size: 55px;
+  animation: reveal 3000ms ease-in-out forwards 200ms,
+             glow 2500ms linear infinite 2000ms;
+}
+
+  @keyframes reveal {
+    100% {
+      background-size: 300% 300%;
+    }
+  }
+  @keyframes glow {
+    40% {
+      text-shadow: 0 0 8px #fff;
+    }
+  }
+
+	

@@ -1,0 +1,571 @@
+<!doctype html>
+<html>
+  <head>
+	<title>Backtracking</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/algoritm.css">
+	  <link rel="stylesheet" href="css/sidebar2.css">
+	  
+    <!-- Boxicons Link -->
+    <link href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   </head>
+
+<body>
+
+	
+<div class="middle" align="center">
+	
+<table id="probleme">
+		<tr>
+			<td class="probleme"><a href="#diviziune"><button class="buttonTop">Introducere</button> </a></td>
+			<td class="probleme"> <a href="#exemplu"><button class="buttonTop">Exemplu</button></a></td>
+			<td class="probleme"> <a href="#algoritm"><button class="buttonTop">Algoritm general</button></a></td>
+			<td class="probleme"><a href="#sablon"><button class="buttonTop">Șablon C++</button></a></td>
+		</tr>
+</table>	
+	
+	
+	<div id="titlu2">Metoda Backtracking</div>
+	<!-- Introducere -->
+	<div id="diviziune">
+		<div class="subtitlu">I. Introducere</div> <br>
+		<div class="paragraf">
+			<p>
+				
+		Metoda backtracking poate fi aplicată în rezolvarea problemelor care respectă următoarele condiții:
+			<ul>
+				<li class="lista1"> soluția poate fi reprezentată printr-un tablou <b class="box"> &nbsp; x[ ]=(x[1], x[2], ..., x[n])  &nbsp;</b>, fiecare element <b class="box"> &nbsp;x[i]&nbsp; </b> aparținând unei mulțimi cunoscute <b class="box"> &nbsp;A<sub>i</sub>&nbsp;</b>;</li>
+				<li class="lista1"> fiecare mulțime <b class="box"> &nbsp;A<sub>i</sub>&nbsp;</b> este finită, iar elementele ei se află într-o relație de ordine precizată – de multe ori cele <b class="box">&nbsp; n&nbsp;</b> mulțimi sunt identice;</li>
+				<li class="lista1"> se cer toate soluțiile problemei sau se cere o anumită soluție care nu poate fi determinată într-un alt mod (de regulă mai rapid).</li>
+			</ul>
+			
+		<br><br>
+		Algoritmul de tip backtracking construiește vectorul <b class="box"> &nbsp;x[ ]&nbsp;</b> (numit<b> vector soluție</b>) astfel:	
+		<br><br>
+		Fiecare pas <b class="box"> &nbsp;k&nbsp;</b>, începând (de regulă) de la pasul <b class="box"> &nbsp;1&nbsp;</b>, se prelucrează elementul curent <b class="box"> &nbsp;x[k]&nbsp;</b> al vectorului soluție:
+			
+			<ul class="lista">
+				<li class="lista1"><b class="box"> &nbsp;x[k]&nbsp;</b> primește pe rând valori din mulțimea corespunzătoare <b class="box"> &nbsp;A<sub>k</sub>;&nbsp;</b></li>
+				<li class="lista1">la fiecare pas se verifică dacă configurația curentă a vectorului soluție poate duce la o soluție finală – dacă valoarea lui <b class="box"> &nbsp;x[k]&nbsp;</b> este corectă în raport cu <b class="box"> &nbsp;x[1], x[2], … x[k-1]:&nbsp;</b></li>
+			</ul>
+				
+			<ul class="lista" style="list-style-type:circle;">
+				<li class="lista2">dacă valoarea nu este corectă, elementul curent <b class="box"> &nbsp;X[k]&nbsp;</b> primește următoarea valoare din <b class="box"> &nbsp;A<sub>k</sub>&nbsp;</b> sau revenim la elementul anterior <b class="box"> &nbsp;x[k-1]&nbsp;</b>, dacă <b class="box"> &nbsp;X[k]&nbsp;</b> a primit toate valorile din <b class="box"> &nbsp;A<sub>k</sub>&nbsp;</b> – pas înapoi;</li>
+				<li class="lista2">dacă valoarea lui <b class="box"> &nbsp;x[k]&nbsp;</b> este corectă (avem o soluție parțială), se verifică existența unei soluții finale a problemei:</li>
+			</ul>
+			
+			<ul  class="lista" style="list-style-type:square;">
+				<li class="lista3">dacă configurația curentă a vectorului soluție <b class="box"> &nbsp;x&nbsp;</b> reprezintă soluție finală (de regulă) o afișăm;</li>
+				<li class="lista3">dacă nu am identificat o soluție finală trecem la următorul element, <b class="box"> &nbsp;x[k+1]&nbsp;</b>, și reluăm procesul pentru acest element – pas înainte.</li>
+			</ul>
+		<br>
+			Pe măsură ce se construiește, vectorul soluție <b class="box"> &nbsp;x[ ]&nbsp;</b> reprezintă o <b>soluție parțială</b> a problemei. Când vectorul soluție este complet construit, avem o <b>soluție finală</b> a problemei.
+		</p></div>
+	</div>  <!-- Inchidere diviziune introducere -->
+	
+	<!-- Exemplu -->
+	<div id="exemplu">
+		<div class="subtitlu">II. Exemplu</div> <br>
+		<div class="paragraf">
+			<p>
+				Să rezolvăm următoarea problemă folosind metoda backtracking, “cu creionul pe hârtie”:<i> Să se afișeze permutările mulțimii <b class="box"> &nbsp;{1, 2, 3} &nbsp;</b> .</i>
+				<br>
+				Ne amintim că un șir de numere reprezintă o permutare a unei mulțimi M dacă și numai dacă conține fiecare element al mulțimii M o singură dată. Altfel spus, în cazul nostru:
+				
+				<ul class="lista">
+					<li class="lista1">are exact  <b class="box"> &nbsp; 3 &nbsp;</b> elemente;</li>
+					<li class="lista1">fiecare element este cuprins între <b class="box"> &nbsp; 1 &nbsp;</b> și <b class="box"> &nbsp; 3 &nbsp;</b>;</li>
+					<li class="lista1">elementele nu se repetă.</li>
+				</ul>
+				<br>
+				Pentru a rezolva problemă vom scrie pe rând valori din mulțimea dată și vom verifica la fiecare pas dacă valorile scrise duc la o permutare corectă:
+			<br><br>
+			<!-- Tabel -->
+			
+				<table style="width:85%">
+			  		<tr>
+						
+						<th style="width:15%"><b class="box">&nbsp;<font size="+1" family="Poppins, sans serif" color="#A71044">k&nbsp;</font></b></th>
+						<th style="width:20%"><b class="box"><font size="+1" family="Poppins, sans serif" color="#A71044">x[ ] </font>&nbsp;</b></th> 
+						<th style="width:65%">Observații</th>
+			  		</tr>
+				  	<tr>
+						<td><b class="box"> 1 &nbsp; &nbsp;&nbsp;</b></td>
+						<td><b class="boxGrey">&nbsp; 1  &nbsp;</b>&nbsp;<b class="boxWhite">&nbsp; -  &nbsp;</b>&nbsp;<b class="boxWhite">&nbsp; -  &nbsp;</b></td>
+						<td>corect, pas înainte</td>
+				  	</tr>
+					
+			  		<tr>
+						<td><b class="box"> &nbsp;&nbsp; 2 &nbsp;&nbsp;</b></td>
+						<td><b class="boxWhite">&nbsp; 1  &nbsp;</b>&nbsp;<b class="boxGrey">&nbsp; 1  &nbsp;</b>&nbsp;<b class="boxWhite">&nbsp; -  &nbsp;</b></td>
+						<td>greșit</td>
+			  		</tr>
+			  		<tr>
+						<td><b class="box"> &nbsp;&nbsp; 2 &nbsp;&nbsp;</b></td>
+						<td><b class="boxWhite">&nbsp; 1  &nbsp;</b>&nbsp;<b class="boxGrey">&nbsp; 2  &nbsp;</b>&nbsp;<b class="boxWhite">&nbsp; -  &nbsp;</b></td>
+						<td>corect, pas înainte</td>
+			  		</tr>
+					
+					<tr>
+						<td><b class="box"> &nbsp;&nbsp;&nbsp;&nbsp; 3 </b></td>
+						<td><b class="boxWhite">&nbsp; 1  &nbsp;</b>&nbsp;<b class="boxWhite">&nbsp; 2  &nbsp;</b>&nbsp;<b class="boxGrey">&nbsp; 1  &nbsp;</b></td>
+						<td>greșit</td>
+			  		</tr>
+					<tr>
+						<td><b class="box"> &nbsp;&nbsp;&nbsp;&nbsp; 3 </b></td>
+						<td><b class="boxWhite">&nbsp; 1  &nbsp;</b>&nbsp;<b class="boxWhite">&nbsp; 2  &nbsp;</b>&nbsp;<b class="boxGrey">&nbsp; 2  &nbsp;</b></td>
+						<td>greșit</td>
+			  		</tr>
+					<tr>
+						<td><b class="box"> &nbsp;&nbsp;&nbsp;&nbsp; 3 </b></td>
+						<td><b class="boxWhite">&nbsp; 1  &nbsp;</b>&nbsp;<b class="boxWhite">&nbsp; 2  &nbsp;</b>&nbsp;<b class="boxGrey">&nbsp; 3  &nbsp;</b></td>
+						<td>soluție finală 1</td>
+			  		</tr>
+					<tr>
+						<td><b class="box"> &nbsp;&nbsp;&nbsp;&nbsp; 3 </b></td>
+						<td><b class="boxWhite">&nbsp; 1  &nbsp;</b>&nbsp;<b class="boxWhite">&nbsp; 2  &nbsp;</b>&nbsp;<b class="boxGrey">&nbsp; !  &nbsp;</b></td>
+						<td>am terminat valorile posibile pentru<b class="box">&nbsp; x[ 3 ]&nbsp;</b>, pas înapoi</td>
+			  		</tr>
+					
+					<tr>
+						<td><b class="box"> &nbsp;&nbsp; 2 &nbsp;&nbsp;</b></td>
+						<td><b class="boxWhite">&nbsp; 1  &nbsp;</b>&nbsp;<b class="boxGrey">&nbsp; 3  &nbsp;</b>&nbsp;<b class="boxWhite">&nbsp; -  &nbsp;</b></td>
+						<td>corect, pas înainte</td>
+			  		</tr>
+					
+					<tr>
+						<td><b class="box"> &nbsp;&nbsp;&nbsp;&nbsp; 3 </b></td>
+						<td><b class="boxWhite">&nbsp; 1  &nbsp;</b>&nbsp;<b class="boxWhite">&nbsp; 3  &nbsp;</b>&nbsp;<b class="boxGrey">&nbsp; 1  &nbsp;</b></td>
+						<td>greșit</td>
+			  		</tr>
+					<tr>
+						<td><b class="box"> &nbsp;&nbsp;&nbsp;&nbsp; 3 </b></td>
+						<td><b class="boxWhite">&nbsp; 1  &nbsp;</b>&nbsp;<b class="boxWhite">&nbsp; 3  &nbsp;</b>&nbsp;<b class="boxGrey">&nbsp; 2  &nbsp;</b></td>
+						<td>soluție finală 2</td>
+			  		</tr>
+					<tr>
+						<td><b class="box"> &nbsp;&nbsp;&nbsp;&nbsp; 3 </b></td>
+						<td><b class="boxWhite">&nbsp; 1  &nbsp;</b>&nbsp;<b class="boxWhite">&nbsp; 3  &nbsp;</b>&nbsp;<b class="boxGrey">&nbsp; 3  &nbsp;</b></td>
+						<td>greșit</td>
+			  		</tr>
+					<tr>
+						<td><b class="box"> &nbsp;&nbsp;&nbsp;&nbsp; 3 </b></td>
+						<td><b class="boxWhite">&nbsp; 1  &nbsp;</b>&nbsp;<b class="boxWhite">&nbsp; 3  &nbsp;</b>&nbsp;<b class="boxGrey">&nbsp; !  &nbsp;</b></td>
+						<td>am terminat valorile posibile pentru<b class="box">&nbsp; x[ 3 ]&nbsp;</b>, pas înapoi</td>
+			  		</tr>
+					
+					<tr>
+						<td><b class="box"> &nbsp;&nbsp; 2 &nbsp;&nbsp;</b></td>
+						<td><b class="boxWhite">&nbsp; 1  &nbsp;</b>&nbsp;<b class="boxGrey">&nbsp; !  &nbsp;</b>&nbsp;<b class="boxWhite">&nbsp; -  &nbsp;</b></td>
+						<td>am terminat valorile posibile pentru<b class="box">&nbsp; x[ 2 ]&nbsp;</b>, pas înapoi</td>
+			  		</tr>
+					
+					<tr>
+						<td><b class="box"> 1 &nbsp; &nbsp;&nbsp;</b></td>
+						<td><b class="boxGrey">&nbsp; 2  &nbsp;</b>&nbsp;<b class="boxWhite">&nbsp; -  &nbsp;</b>&nbsp;<b class="boxWhite">&nbsp; -  &nbsp;</b></td>
+						<td>corect, pas înainte</td>
+				  	</tr>
+					
+					<tr>
+						<td><b class="box"> &nbsp;&nbsp; 2 &nbsp;&nbsp;</b></td>
+						<td><b class="boxWhite">&nbsp; 2  &nbsp;</b>&nbsp;<b class="boxGrey">&nbsp; 1  &nbsp;</b>&nbsp;<b class="boxWhite">&nbsp; -  &nbsp;</b></td>
+						<td>corect, pas înainte</td>
+			  		</tr>
+					
+					<tr>
+						<td><b class="box"> &nbsp;&nbsp;&nbsp;&nbsp; 3 </b></td>
+						<td><b class="boxWhite">&nbsp; 2  &nbsp;</b>&nbsp;<b class="boxWhite">&nbsp; 1  &nbsp;</b>&nbsp;<b class="boxGrey">&nbsp; 1  &nbsp;</b></td>
+						<td>greșit</td>
+			  		</tr>
+					<tr>
+						<td><b class="box"> &nbsp;&nbsp;&nbsp;&nbsp; 3 </b></td>
+						<td><b class="boxWhite">&nbsp; 2  &nbsp;</b>&nbsp;<b class="boxWhite">&nbsp; 1  &nbsp;</b>&nbsp;<b class="boxGrey">&nbsp; 2  &nbsp;</b></td>
+						<td>greșit</td>
+			  		</tr>
+					<tr>
+						<td><b class="box"> &nbsp;&nbsp;&nbsp;&nbsp; 3 </b></td>
+						<td><b class="boxWhite">&nbsp; 2  &nbsp;</b>&nbsp;<b class="boxWhite">&nbsp; 1  &nbsp;</b>&nbsp;<b class="boxGrey">&nbsp; 3  &nbsp;</b></td>
+						<td>soluție finală 3</td>
+			  		</tr>
+					<tr>
+						<td><b class="box"> &nbsp;&nbsp;&nbsp;&nbsp; 3 </b></td>
+						<td><b class="boxWhite">&nbsp; 2  &nbsp;</b>&nbsp;<b class="boxWhite">&nbsp; 1  &nbsp;</b>&nbsp;<b class="boxGrey">&nbsp; !  &nbsp;</b></td>
+						<td>am terminat valorile posibile pentru<b class="box">&nbsp; x[ 3 ]&nbsp;</b>, pas înapoi</td>
+			  		</tr>
+					
+					<tr>
+						<td><b class="box"> &nbsp;&nbsp; 2 &nbsp;&nbsp;</b></td>
+						<td><b class="boxWhite">&nbsp; 2  &nbsp;</b>&nbsp;<b class="boxGrey">&nbsp; 2  &nbsp;</b>&nbsp;<b class="boxWhite">&nbsp; -  &nbsp;</b></td>
+						<td>greșit</td>
+			  		</tr>
+					
+					<tr>
+						<td><b class="box"> &nbsp;&nbsp; 2 &nbsp;&nbsp;</b></td>
+						<td><b class="boxWhite">&nbsp; 2  &nbsp;</b>&nbsp;<b class="boxGrey">&nbsp; 3  &nbsp;</b>&nbsp;<b class="boxWhite">&nbsp; -  &nbsp;</b></td>
+						<td>corect, pas înainte</td>
+			  		</tr>
+					
+					<tr>
+						<td><b class="box"> &nbsp;&nbsp;&nbsp;&nbsp; 3 </b></td>
+						<td><b class="boxWhite">&nbsp; 2  &nbsp;</b>&nbsp;<b class="boxWhite">&nbsp; 3  &nbsp;</b>&nbsp;<b class="boxGrey">&nbsp; 1  &nbsp;</b></td>
+						<td>soluție finală 4</td>
+			  		</tr>
+					<tr>
+						<td><b class="box"> &nbsp;&nbsp;&nbsp;&nbsp; 3 </b></td>
+						<td><b class="boxWhite">&nbsp; 2  &nbsp;</b>&nbsp;<b class="boxWhite">&nbsp; 3  &nbsp;</b>&nbsp;<b class="boxGrey">&nbsp; 2  &nbsp;</b></td>
+						<td>greșit</td>
+			  		</tr>
+					
+					<tr>
+						<td><b class="box"> &nbsp;&nbsp;&nbsp;&nbsp; 3 </b></td>
+						<td><b class="boxWhite">&nbsp; 2  &nbsp;</b>&nbsp;<b class="boxWhite">&nbsp; 3  &nbsp;</b>&nbsp;<b class="boxGrey">&nbsp; 3  &nbsp;</b></td>
+						<td>greșit</td>
+			  		</tr>
+					<tr>
+						<td><b class="box"> &nbsp;&nbsp;&nbsp;&nbsp; 3 </b></td>
+						<td><b class="boxWhite">&nbsp; 2  &nbsp;</b>&nbsp;<b class="boxWhite">&nbsp; 3  &nbsp;</b>&nbsp;<b class="boxGrey">&nbsp; !  &nbsp;</b></td>
+						<td>am terminat valorile posibile pentru<b class="box">&nbsp; x[ 3 ]&nbsp;</b>, pas înapoi</td>
+			  		</tr>
+					<tr>
+						<td><b class="box"> &nbsp;&nbsp; 2 &nbsp;&nbsp;</b></td>
+						<td><b class="boxWhite">&nbsp; 2  &nbsp;</b>&nbsp;<b class="boxGrey">&nbsp; !  &nbsp;</b>&nbsp;<b class="boxWhite">&nbsp; -  &nbsp;</b></td>
+						<td>am terminat valorile posibile pentru<b class="box">&nbsp; x[ 2 ]&nbsp;</b>, pas înapoi</td>
+			  		</tr>
+					
+					<tr>
+						<td><b class="box"> 1 &nbsp; &nbsp;&nbsp;</b></td>
+						<td><b class="boxGrey">&nbsp; 3  &nbsp;</b>&nbsp;<b class="boxWhite">&nbsp; -  &nbsp;</b>&nbsp;<b class="boxWhite">&nbsp; -  &nbsp;</b></td>
+						<td>corect, pas înainte</td>
+				  	</tr>
+					
+					<tr>
+						<td><b class="box"> &nbsp;&nbsp; 2 &nbsp;&nbsp;</b></td>
+						<td><b class="boxWhite">&nbsp; 3  &nbsp;</b>&nbsp;<b class="boxGrey">&nbsp; 1  &nbsp;</b>&nbsp;<b class="boxWhite">&nbsp; -  &nbsp;</b></td>
+						<td>corect, pas înainte</td>
+			  		</tr>
+					<tr>
+						<td><b class="box"> &nbsp;&nbsp;&nbsp;&nbsp; 3 </b></td>
+						<td><b class="boxWhite">&nbsp; 3  &nbsp;</b>&nbsp;<b class="boxWhite">&nbsp; 1  &nbsp;</b>&nbsp;<b class="boxGrey">&nbsp; 1  &nbsp;</b></td>
+						<td>greșit</td>
+			  		</tr>
+					<tr>
+						<td><b class="box"> &nbsp;&nbsp;&nbsp;&nbsp; 3 </b></td>
+						<td><b class="boxWhite">&nbsp; 3  &nbsp;</b>&nbsp;<b class="boxWhite">&nbsp; 1  &nbsp;</b>&nbsp;<b class="boxGrey">&nbsp; 3  &nbsp;</b></td>
+						<td>greșit</td>
+			  		</tr>
+					<tr>
+						<td><b class="box"> &nbsp;&nbsp;&nbsp;&nbsp; 3 </b></td>
+						<td><b class="boxWhite">&nbsp; 3  &nbsp;</b>&nbsp;<b class="boxWhite">&nbsp; 1  &nbsp;</b>&nbsp;<b class="boxGrey">&nbsp; !  &nbsp;</b></td>
+						<td>am terminat valorile posibile pentru<b class="box">&nbsp; x[ 3 ]&nbsp;</b>, pas înapoi</td>
+			  		</tr>
+					
+					<tr>
+						<td><b class="box"> &nbsp;&nbsp; 2 &nbsp;&nbsp;</b></td>
+						<td><b class="boxWhite">&nbsp; 3  &nbsp;</b>&nbsp;<b class="boxGrey">&nbsp; 2  &nbsp;</b>&nbsp;<b class="boxWhite">&nbsp; -  &nbsp;</b></td>
+						<td>corect, pas înainte</td>
+			  		</tr>
+					<tr>
+						<td><b class="box"> &nbsp;&nbsp; 2 &nbsp;&nbsp;</b></td>
+						<td><b class="boxWhite">&nbsp; 3  &nbsp;</b>&nbsp;<b class="boxGrey">&nbsp; 1  &nbsp;</b>&nbsp;<b class="boxWhite">&nbsp; 2  &nbsp;</b></td>
+						<td>soluție finală 6</td>
+			  		</tr>
+					
+					<tr>
+						<td><b class="box"> &nbsp;&nbsp;&nbsp;&nbsp; 3 </b></td>
+						<td><b class="boxWhite">&nbsp; 3  &nbsp;</b>&nbsp;<b class="boxWhite">&nbsp; 2  &nbsp;</b>&nbsp;<b class="boxGrey">&nbsp; 2  &nbsp;</b></td>
+						<td>greșit</td>
+			  		</tr>
+					<tr>
+						<td><b class="box"> &nbsp;&nbsp;&nbsp;&nbsp; 3 </b></td>
+						<td><b class="boxWhite">&nbsp; 3  &nbsp;</b>&nbsp;<b class="boxWhite">&nbsp; 2  &nbsp;</b>&nbsp;<b class="boxGrey">&nbsp; 3  &nbsp;</b></td>
+						<td>greșit</td>
+			  		</tr>
+					<tr>
+						<td><b class="box"> &nbsp;&nbsp;&nbsp;&nbsp; 3 </b></td>
+						<td><b class="boxWhite">&nbsp; 3  &nbsp;</b>&nbsp;<b class="boxWhite">&nbsp; 2  &nbsp;</b>&nbsp;<b class="boxGrey">&nbsp; !  &nbsp;</b></td>
+						<td>am terminat valorile posibile pentru<b class="box">&nbsp; x[ 3 ]&nbsp;</b>, pas înapoi</td>
+			  		</tr>
+					
+					<tr>
+						<td><b class="box"> &nbsp;&nbsp; 2 &nbsp;&nbsp;</b></td>
+						<td><b class="boxWhite">&nbsp; 3  &nbsp;</b>&nbsp;<b class="boxGrey">&nbsp; 3  &nbsp;</b>&nbsp;<b class="boxWhite">&nbsp; -  &nbsp;</b></td>
+						<td>greșit</td>
+			  		</tr>
+					
+					<tr>
+						<td><b class="box"> &nbsp;&nbsp; 2 &nbsp;&nbsp;</b></td>
+						<td><b class="boxWhite">&nbsp; 3  &nbsp;</b>&nbsp;<b class="boxGrey">&nbsp; !  &nbsp;</b>&nbsp;<b class="boxWhite">&nbsp; -  &nbsp;</b></td>
+						<td>am terminat valorile posibile pentru<b class="box">&nbsp; x[ 2 ]&nbsp;</b>, pas înapoi</td>
+			  		</tr>
+					
+					<tr>
+						<td><b class="box"> 1 &nbsp;&nbsp;</b></td>
+						<td><b class="boxGrey">&nbsp; !  &nbsp;</b>&nbsp;<b class="boxWhite">&nbsp; -  &nbsp;</b>&nbsp;<b class="boxWhite">&nbsp; -  &nbsp;</b></td>
+						<td>am terminat valorile posibile pentru<b class="box">&nbsp; x[ 1 ]&nbsp;</b>, pas înapoi</td>
+			  		</tr>
+					
+					
+			</table>
+			
+			</p>
+		</div>
+	</div> <!-- Inchidere diviziune exemplu -->
+	
+	<!-- Formalizare -->
+	<div class="diviziune">
+		<div class="subtitlu">III. Formalizare</div> <br>
+		<div class="paragraf">
+			<p>
+			Pentru a putea realiza un algoritm backtracking pentru rezolvarea unei probleme trebuie să răspundem la următoarele întrebări:
+				<br>
+				<ol class="lista" type="1">
+					<li class="lista1"><b>Ce memorăm în vectorul soluție <b class="box">&nbsp;x[]&nbsp;</b>? </b>Uneori răspunsul este direct; de exemplu, la generarea permutărilor vectorul soluție reprezintă o permutare a mulțimii <b class="box">&nbsp;A={1,2,...,n}&nbsp;</b>. În alte situații, vectorul soluție este o reprezentare mai puțin directă a soluției; de exemplu, <a href="Submultimi.html">generarea submulțimilor</a> unei mulțimi folosind vectori caracteristici sau Problema reginelor.</li>
+						
+					<li class="lista1"><b>Ce valori poate lua fiecare element <b class="box">&nbsp;x[k]&nbsp;</b> vectorului soluție și câte elemente poate avea <b class="box">&nbsp;x[]&nbsp;</b>?</b> Altfel spus, care sunt mulțimile <b class="box">&nbsp;A<sub>k</sub>&nbsp;</b>. Vom numi aceste restricții <b>condiții externe</b>. Cu cât condițiile externe sunt mai restrictive (cu cât mulțimile <b class="box">&nbsp;A<sub>k</sub>&nbsp;</b> au mai puține elemente), cu atât va fi mai rapid algoritmul!</li>
+						
+					<li class="lista1"><b>Ce condiții trebuie să îndeplinească <b class="box">&nbsp;x[k] &nbsp;</b>ca să fie considerat corect?</b> Elementul <b class="box">&nbsp;x[k] &nbsp;</b>a primit o anumită valoare, în conformitate ce condițiile externe. Este ea corectă? Poate conduce la o soluție finală? Aceste condiții se numesc <b>condiții interne</b> și în ele pot să intervină doar <b class="box">&nbsp;x[k]&nbsp;</b> și elementele <b class="box">&nbsp;x[1], x[2], …, x[k-1]&nbsp;</b>. Elementele <b class="box">&nbsp;x[k+1], …, x[n]&nbsp;</b> nu poti apărea în condițiile interne deoarece încă nu au fost generate!!!</li>
+						
+					<li class="lista1"><b>Am găsit o soluție finală? </b>Elementul <b class="box">&nbsp;x[k]&nbsp;</b> a primit o valoare conformă cu condițiile externe, care respectă condițiile interne. Am ajuns la soluție finală sau continuăm cu <b class="box">&nbsp;x[k+1]&nbsp;</b>?</li>
+				</ol>
+				<br><br>
+				<b>Exemplu.</b> Pentru problema <a href="Permutari.html">generării permutărilor</a> mulțimii <b class="box">&nbsp;A={1,2,3,…,n}&nbsp;</b>, condițiile de mai sus sunt:
+				<br>
+				
+				<ol class="lista" type="1">
+					<li class="lista1"> Vectorul soluție conține o permutare a mulțimii <b class="box">&nbsp;A;&nbsp;</b></li>
+					<li class="lista1"><b>Condiții externe</b>: <b class="box">&nbsp;x[k]∈{1,2,3,…,n}&nbsp;</b> sau <b class="box">&nbsp;x[k]=&nbsp;</b><b class="box2">&nbsp;1, n&nbsp;</b>, pentru <b class="box">&nbsp;k=&nbsp;</b><b class="box2">&nbsp;1, n &nbsp;</b></li>
+					<li class="lista1"> <b>Condiții interne</b>: <b class="box">&nbsp;x[k]≠x[i]&nbsp;</b>, pentru <b class="box">&nbsp; i=&nbsp;</b><b class="box2">&nbsp;1, k−1&nbsp;</b></li>
+					<li class="lista1"><b>Condiții de existență a soluției</b>:<b class="box">&nbsp; k=n&nbsp;</b> </li>
+				</ol>
+			
+			</p>			
+		</div>
+		
+	</div> <!-- Inchidere diviziune formalizare -->
+	
+
+
+	<!-- Algoritmul general -->
+	<div id="algoritm">
+		<div class="subtitlu">IV. Algoritmul general</div> <br>
+		<div class="paragraf">
+			<p>
+				Metoda backtracking poate fi implementată iterativ sau recursiv. În ambele situații se se folosește o structură de date de tip <b>stivă</b>. În cazul implementării iterative, stiva trebuie gestionată intern în algoritm – ceea ce poate duce la dificulăți în implementăre. În cazul implementării recursive se folosește spațiu de memorie de tip stivă – STACK alocat programului; implementarea recursivă este de regulă mai scurtă și mai ușor de înțeles. Acest articol prezintă implementări recursive ale metodei.
+				<br><br>
+				Următorul subprogram recursiv prezintă algoritmul la modul general:
+				<br><br>
+				<ul>
+					<li class="lista1">la fiecare apel <b class="box">BACK(k)</b> se generează valori pentru elementul <b class="box">x[k] &nbsp;</b>al vectorului soluție; </li>
+					<li class="lista1">instrucțiunea <b class="box">Pentru</b> modelează condițiile externe; </li>
+					<li class="lista1"> subprogramul <b class="box">OK(k)</b> verifică condițiile interne;</li>
+					<li class="lista1">subprogramul <b class="box">Solutie(k)</b> verifică dacă configurația curentă a vectorului soluție reprezintă o soluție finală; </li>
+					<li class="lista1">subprogramul <b class="box">Afisare(k)</b> tratează soluția curentă a problemei – de exemplu o afișează! </li>
+				</ul>
+				<br>
+<pre><p class="cod" contentEditable="true">subprogram BACK(k)
+┌ <span class="purple">pentru</span> fiecare element i din A[k] <span class="purple">executa</span>
+│    x[k] ← i
+│    ┌ <span class="purple">daca</span> OK(k) <span class="purple">atunci</span>
+│    │    ┌ <span class="purple">daca</span> Solutie(k) <span class="purple">atunci</span>
+│    │    │    Afisare(k)
+│    │    │ <span class="purple">altfel</span>
+│    │    │    BACK(k+1)
+│    │    └■
+│    └■
+└■
+sfarsit_subprogram</p></pre>	
+		
+				<br><br>
+				<b>Observații:</b> 
+				<br><br>
+				<ul>
+					<li class="lista1">De cele mai multe ori mulțimile <b class="box"> A &nbsp;</b>sunt de forma <b class="box">A={1,2,3,….,n} </b> sau <b class="box">A={1,2,3,….,m} </b> sau <b class="box">A={a,a+1,a+2,….,b} &nbsp; </b>sau o altă formă astfel încât să putem scrie instrucțiunea Pentru conform specificului limbajului de programare folosit – eventual folosind o structură repetitivă de alt tip! Dacă este necesar, trebuie realizate unele transformări încât mulțimile să ajungă la această formă!</li>
+					
+					<li class="lista1">Elementele mulțimii <b class="box">A </b> pot fi in orice ordine. Contează însă ordinea în care le vom parcurge în instrucțiunea <span class="box">Pentru</span> , deoarece în probleme este precizată de obicei o anumită ordine în care trebuie generate soluțiile:</li>
+						<ul>
+							<li class="lista2"> dacă parcurgem elementele lui <b class="box">A </b> în ordine crescătoare vom obține soluții în ordine lexicografică; </li>
+							<li class="lista2"> dacă parcurgem elementele lui <b class="box">A </b> în ordine descrescătoare vom obține soluții în ordine invers lexicografică. </li>
+						</ul>	
+					
+					<li class="lista1">În anumite probleme determinarea unei soluții finale nu conduce la întreruperea apelurilor recursive. Un exemplu este <a href="Submultimi.html">generarea submulțimilor</a> unei mulțimi. În acest caz algoritmul de mai sus poate fi modificat astfel:</li>
+				</ul>
+				<br>
+
+<pre><p class="cod" contentEditable="true">┌ <span class="purple">daca</span> OK(k) <span class="purple">atunci</span>
+│    ┌ <span class="purple">daca</span> Solutie(k) <span class="purple">atunci</span>
+│    │     Afisare(k)
+│    └■
+│     BACK(k+1)
+└■</p></pre>
+			
+			</p>
+		</div>
+	</div>   <!-- Inchidere diviziune Algoritm general -->
+
+		<!-- Sablon C++ -->
+	<div id="sablon">
+		<div class="subtitlu">V. Un șablon C++</div> <br>
+		<div class="paragraf">
+			<p>
+			Următoarea secvență C++ oferă un șablon pentru rezolvarea unei probleme oarecare folosind metoda backtracking. Vom considera în continuare următoarele condiții externe: <b class="box"> x[k]=</b><b class="box2">A,B</b>, pentru <b class="box">k=</b><b class="box2">1,n</b>. În practică <b class="box">A </b> și <b class="box">B </b> vor avea valori specifice problemei:
+			</p>
+			<br>
+			
+<!-- secventa cod C++ -->		
+<pre><p class="cod" contentEditable="true"><span class="purple">#include</span> <span class="orange">&lt;fstream&gt;</span>
+<span class="purple">using</span> <span class="blue">namespace</span> <span class="greenLight">std</span>;
+
+<span class="blue">int</span> <span class="blueLight">x</span>[10] ,n;
+
+<span class="blue">int</span> <span class="yellow">Solutie</span>(<span class="blue">int</span> <span class="blueLight">k</span>){
+<span class="green">// x[k] verifică condițiile interne</span>
+<span class="green">// verificare x[] este o soluție finală</span>
+    <span class="purple">return</span> 1; <span class="green">// sau 0
+}
+
+<span class="blue">int</span> <span class="yellow">OK</span>(<span class="blue">int</span> <span class="blueLight">k</span>){
+    <span class="green">// verificare conditii interne</span>
+    <span class="purple">return</span> 1; // sau 0</span>
+}
+
+<span class="blue">void</span> <span class="yellow">Afisare</span>(<span class="blue">int</span> <span class="blueLight">k</span>)
+{
+<span class="green">// afișare/prelucrare soluția finală</span>
+}
+
+<span class="blue">void</span> <span class="yellow">Back</span>(<span class="blue">int</span> <span class="blueLight">k</span>){
+    <span class="purple">for</span>(<span class="blue">int</span> i = A ; i &lt;= B ; ++i)
+    {
+        <span class="blueLight">x</span>[k]=i;
+        <span class="purple">if</span>( <span class="yellow">OK</span>(k) )
+            <span class="purple">if</span>(<span class="yellow">Solutie</span>(k))
+                <span class="yellow">Afisare</span>(k);
+            <span class="purple">else</span>
+                <span class="yellow">Back</span>(k+1);
+    }
+}
+<span class="blue">int</span> <span class="yellow">main</span>(){
+    <span class="green">//citire date de intrare</span>
+    <span class="yellow">Back</span>(1);
+    <span class="purple">return</span> 0;
+}</p></pre>		
+			
+<!-- Inchidere secventa cod -->
+		<br><br>
+		<p>
+			De multe ori condițiile de existență a soluției sunt simple și nu se justifică scrierea unei funcții pentru verificarea lor, ele putând fi verificate direct în funcția <b class="box">Back()</b>.
+		
+		<br><br>
+			De cele mai multe ori, rezolvarea unei probleme folosind metoda backtracking constă în următoarele:
+		<br>
+		<ol type="1">
+			<li class="lista1">stabilirea semnificației vectorului soluție;</li> 
+			<li class="lista1">stabilirea condițiilor externe;</li> 
+			<li class="lista1">stabilirea condițiilor interne;</li> 
+			<li class="lista1">stabilirea condițiilor de existența a soluției finale;</li> 
+			<li class="lista1">completarea adecvată a șablonului de mai sus!</li> 
+		</ol>
+			
+		</p>
+		</div>
+		
+
+	<div class="subtitlu">VI. Complexitatea algoritmului</div> <br>
+	<div class="paragraf"> 
+		<p>
+			<b>Algoritmii Backtracking sunt exponențiali.</b> Complexitatea depinde de la problemă la problemă dar este de tipul <b class="box"> O(a<sup>n</sup>)</b>. De exemplu:	
+			<ul>
+				<li class="lista1">generarea permutărilor unei mulțimi cu<b class="box">&nbsp;n &nbsp;</b>elemente are complexitatea<b class="box"> &nbsp; O(n!)</b> </li>
+				<li class="lista1">generarea submulțimilor unei mulțimi cu <b class="box"> &nbsp;n &nbsp;</b> elemente are complexitatea <b class="box"> O(2<sup>n</sup>)</b>
+ </li>
+				<li class="lista1"> produsul cartezian <b class="box">  &nbsp;A<sup>n</sup>&nbsp;</b> unde mulțimea <b class="box"> A={1,2,3,…,m}</b> are complexitatea <b class="box">&nbsp; O(m<sup>n</sup>)</b></li>
+				<li class="lista1">etc. </li>
+			</ul>
+		</p>
+	</div>
+	</div>	
+<br><br><br><br>
+		
+</div>	
+	
+<div id="mybutton">
+<a href="#probleme"><button class="arrow"></button></a>
+</div>		
+
+
+<nav>
+	
+	<! -- sidebar -->
+  <div class="sidebar">
+    <div class="logo-details">
+        <div class="logo_name">Backtracking</div>
+        <i class="bx bx-menu" id="btn" ></i>
+    </div>
+    <ul class="nav-list">
+      <li>
+        <a href="Principala.html">
+          <i class="bx bx-home"></i>
+          <span class="links_name">Acasă</span>
+        </a>
+         <span class="tooltip">Acasă</span>
+      </li>
+      <li>
+       <a href="Algoritm.html">
+         <i class="bx bx-notepad" ></i>
+         <span class="links_name">Algoritm</span>
+       </a>
+       <span class="tooltip">Algoritm</span>
+     </li>
+     <li>
+       <a href="Permutari.html">
+         <i class="bx bx-pencil" ></i>
+         <span class="links_name">Exerciții</span>
+       </a>
+       <span class="tooltip">Exerciții</span>
+     </li>
+     <li>
+       <a href="ProblemaDamelor.html">
+         <i class="bx bx-code-alt" ></i>
+         <span class="links_name">Aplicație</span>
+       </a>
+       <span class="tooltip">Aplicație</span>
+     </li>
+     <li>
+       <a href="ProblemaDamelorJavaScript.html">
+         <i class="bx bxl-javascript" type="logo" ></i>
+         <span class="links_name">JavaScript</span>
+       </a>
+       <span class="tooltip">JavaScript</span>
+     </li>
+     <li>
+       <a href="Test.html">
+         <i class="bx bx-edit" ></i>
+         <span class="links_name">Test</span>
+       </a>
+       <span class="tooltip">Test</span>
+     </li> 
+     <li>
+       <a href="Sudoku.html">
+         <i class="bx bx-game" ></i>
+         <span class="links_name">Sudoku</span>
+       </a>
+       <span class="tooltip">Sudoku</span>
+     </li> 
+	 <li>
+		<a href="PieChart.html">
+		  <i class="bx bx-bar-chart-square" ></i>
+		  <span class="links_name">Grafice</span>
+		</a>
+		<span class="tooltip">Grafice</span>
+	  </li>
+    </ul>
+  </div>
+	
+</nav>
+	
+	
+<script src="js/sidebar.js"></script>
+	
+</body>
+</html>

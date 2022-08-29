@@ -1,0 +1,306 @@
+<!doctype html>
+<html>
+<head>
+	<title> Problema reginelor - JavaScript</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/JavaScript.css">
+	  <link rel="stylesheet" href="css/sidebar2.css">
+	  
+    <!-- Boxicons Link -->
+    <link href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+	
+	
+<div class="middle" align="center">
+
+	<table id="probleme">
+		<tr>
+			<td class="probleme"><a href="#diviziune"><button class="buttonTop">Diagramă</button> </a></td>
+			<td class="probleme"> <a href="#introducere"><button class="buttonTop">Introducere</button></a></td>
+			<td class="probleme"> <a href="#rezolvare"><button class="buttonTop">Rezolvare</button></a></td>
+			<td class="probleme"><a href="#implementare"><button class="buttonTop">Implementare</button></a></td>
+		</tr>
+	</table>
+	
+	<div id="titlu">Problema celor n regine - JavaScript</div>
+
+		<div class="diviziune">
+			<div class="subtitlu"><u>Enunț</u></div>
+			<p class="paragraf">
+				Se dau n regine şi o tablă de şah de dimensiune n x n elemente. Să se găsească toate modalităţile de a aranja toate reginele astfel încât oricare două regine să nu se atace. Două regine se atacă dacă se află pe aceeaşi linie, coloană sau diagonală. 
+			</p>
+		</div>
+		
+		<div id="diviziune">
+			<br>
+			<p class="Black"><b> Dați o valoare pentru n : </b><input id="n" class="input" value="1" type="text" size="2" style="width:4em;"/></p>
+			<br><br>
+			<input type="button" class="button" value=" Afișează " onclick="var n=document.getElementById('n').value;var dame=new queens(n,document.getElementById('diagrama1'));dame.run();" /> 
+		<br>
+		<div id="diagrama1"> </div> 
+		</div>
+	<!-- Introducere -->
+	<div id="introducere">
+		<div class="subtitlu">Introducere</div>
+			<p class="paragraf">
+				Orice câmp al tablei de şah poate fi indicat prin perechea <b class="box">(row, col)</b> indicând respectiv linia şi coloana care se intersectează pe acel câmp. Dar nu este necesar să implicăm un tablou bidimensional, fiindcă putem asocia implicit valorile  <b class="box">col</b> cu indicii de acces într-un vector unidimensional, iar valorile  <b class="box">row</b> cu valorile existente în acest vector.
+				<br><br>
+				Vom considera un vector <span class="red">ROW[n]</span> în care pentru fiecare indice <span class="red">i_col = 0..n-1</span> avem:
+				<br><br>
+				<span class="red">ROW[i_col] == i_row </span> &lt;=&gt; există o damă în poziţia <span class="red">(i_row, i_col)</span>.
+				<br><br>
+				Două dame <span class="red">ROW[i]</span> şi <span class="red">ROW[j]</span> (cu i ≠ j) se atacă &lt;=&gt; 
+				<br><br>
+				<span class="red">ROW[i] == ROW[j]</span> (sunt pe o aceeaşi linie), sau <span class="red">|i - j| == |ROW[i] - ROW[j]|</span> (sunt pe o aceeaşi diagonală).
+				<br><br>
+				Soluţie a problemei va fi orice vector ROW[] care satisface condiţia ca damele ROW[i] şi ROW[j] să nu se atace (pentru i, j = 0..n-1). Nu vom "afişa" vectorul-soluţie ROW[] ca atare, ci (vizând o aplicaţie pentru browser) vom implica obiectele <i>DOM</i> necesare pentru a reprezenta chiar tabla de şah corespunzătoare soluţiei ROW[].
+				<br><br>
+				Putem alege între mai multe metode sau algoritmi de rezolvare, în funcţie de ce sau cât vrem să obţinem: pentru o soluţie, <b>metoda randomizării</b> ar fi suficientă; dacă vrem toate soluţiile - atunci putem folosi <b>metoda backtracking</b>. Pe de altă parte, problema poate fi interpretată ca fiind o problemă de colorare pe un anumit graf.
+				<br><br>
+				În practica de masă a rezolvărilor expeditive se obişnuieşte să se evidenţieze doar aspectele algoritmice; se neglijează faptul că algoritmul respectiv angajează proprietăţi ale unor anumite obiecte definite anterior.
+				<br>
+				De exemplu, algoritmul de rezolvare a ecuaţiei de gradul întâi este unul singur, dacă se conştientizează faptul că el se bazează pe proprietăţile clasei de obiecte din care sunt individualizaţi coeficienţii (fie numere reale, fie numerele complexe, matricele pătratice, clasele de resturi modulo n, etc.).
+			</p>
+	</div>  <!-- Inchidere diviziune introducere -->			
+
+	<div id="rezolvare">
+		<div class="subtitlu">O modalitate de modelare obiectuală</div>
+			<p class="paragraf">
+				Putem obţine o soluţie a unei probleme combinatoriale oarecare folosind următoarea idee:
+			</p>
+			<br>
+<pre><p class="cod" contentEditable="true"><span class="greenLight">Queens</span>(N, DEST) {
+      N      <span class="yellow">indică dimensiunea tablei de şah</span>
+      ROW[]  <span class="yellow">vector unidimensional pentru constituirea soluţiei</span>
+      DEST   <span class="yellow">indică locul în care să fie prezentată soluţia</span>
+
+      show_solution()  <span class="yellow">prezintă soluţia la DEST, într-o formă sau alta</span>
+      is_good()        <span class="yellow">testează dacă în ROW[] avem o soluţie corectă</span>
+      gen_solutions()  <span class="yellow">generează soluţii, într-un mod sau altul</span>
+}</p></pre>		
+		<br>
+		<p class="paragraf">
+			În Javascript putem considera întâi un şablon al proprietăţilor de bază:
+		</p>
+		<br>
+<pre><p class="cod" contentEditable="true"><span class="blue">function</span> <span class="greenLight">Queens</span>(<span class="blueLight">n</span>) {
+      <span class="blue">this</span>.<span class="blueLight">Dim</span> = <span class="blueLight">n</span> &gt; 3 ?  <span class="blueLight">n</span> : 1;
+	  <span class="blue">this</span>.<span class="blueLight">Row</span> = <span class="blue">new</span> <span class="greenLight">Array</span>(<span class="blueLight">n</span>);
+}</p></pre>
+		
+		<br>
+		<p class="paragraf">
+			Invocând această funcţie prin intermediul operatorului <b>new</b>, vom putea crea obiecte individuale (având propriile valori <b>Dim</b> şi <b>Row</b>, fiindcă new asociază this cu obiectul construit):
+		</p>
+		<br>
+<pre><p class="cod" contentEditable="true"><span class="blue">var</span> <span class="blueLight">obj1</span> = <span class="blue">new</span> <span class="yellow">Queens</span>(5);
+<span class="blue">var</span> <span class="blueLight">obj2</span> = <span class="blue">new</span> <span class="yellow">Queens</span>(7);
+<span class="yellow">alert</span>(<span class="blueLight">obj1.Dim</span> + <span class="orange">'\n'</span> + <span class="blueLight">obj2.Dim</span>);
+</p></pre>
+		<br>
+		<p class="paragraf">
+			Angajând proprietatea <b>prototype</b> prevăzută obiectelor Javascript, vom putea extinde şablonul iniţial <i>Queens</i> adăugând alte proprietăţi sau metode:
+		</p>
+		<br>
+<pre><p class="cod" contentEditable="true"><span class="blue"><span class="greenLight">Queens</span>.<span class="blueLight">prototype</span>.<span class="yellow">Dest</span> = function</span> (<span class="blueLight">id_dom</span>) {
+	<span class="purple">return</span> <span class="orange">"obiectul din document cu ID=id_dom"</span>;
+	<span class="gray"> // document.getElementById(id_dom);</span>
+}
+<span class="yellow">alert</span>(<span class="blueLight">obj1.Dim</span> + <span class="orange">'\n'</span> + <span class="blueLight">obj2.Dim</span>);
+</p></pre>
+		<br>
+		
+	</div>
+		
+	
+	<div id="implementare">
+		
+		<div class="subtitlu">Metoda randomizării</div>
+			<p class="paragraf">
+				Putem obţine o soluţie a unei probleme combinatoriale oarecare folosind următoarea idee:
+			</p>
+			<br>
+<pre><p class="cod" contentEditable="true"> REPETĂ {
+         <span class="gray"> generează_aleatoriu componentele soluţiei</span>
+      }
+      PÂNÂ CÂND <span class="gray">vectorul generat satisface_condiţiile de a fi o soluţie a problemei</span>
+</p></pre>
+	<br>
+	<p class="paragraf">Fişierul HTML va trebui să conţină în &lt;script&gt;:</p>
+	<br>
+		
+<pre><p class="cod" contentEditable="true"><span class="blue">function</span> <span class="greenLight">Queens</span>(n, odom) { <span class="gray">// 'odom' referă un obiect existent în DOM-ul documentului </span>
+    <span class="blue">this</span>.n = n &gt; 3 &amp;&amp; n &lt; 10 ?  n : 1; <span class="gray">// n = 10 este deja prohibitiv ca timp (Firefox) </span>
+    <span class="blue">this</span>.row = <span class="blue">new</span> <span class="greenLight">Array</span>(n);
+    <span class="blue">this</span>.odom = odom;
+}
+
+<span class="greenLight">Queens</span>.<span class="blueLight">prototype</span>.<span class="yellow">is_good</span> = function() {
+    <span class="blue">var</span> n = <span class="blue">this</span>.n, row = <span class="blue">this</span>.row;
+    <span class="purple">for</span>(<span class="blue">var</span> i = 0; i &lt; n - 1; i++)
+        <span class="purple">for</span>(<span class="blue">var</span> j = i + 1; j &lt; n; j++) 
+            <span class="purple">if</span>(row[i] == row[j] || <span class="greenLight">Math</span>.abs(row[i] - row[j]) == j - i)
+                <span class="purple">return</span> 0;
+    <span class="purple">return</span> 1;
+};
+
+<span class="greenLight">Queens</span>.<span class="blueLight">prototype</span>.<span class="yellow">set_queen</span> = <span class="blue">function</span>() {<span class="gray">// implementare a randomizării</span>
+    <span class="blue">var</span> n = <span class="blue">this</span>.n, row = <span class="blue">this</span>.row;       <span class="gray">// insuficient elaborată </span>
+    <span class="purple">do</span> {                                  <span class="gray">// (deja n = 10 ia prea mult timp)</span>
+        <span class="purple">for</span>(<span class="blue">var</span> i = 0; i &lt; n; i++)
+            row[i] = <span class="greenLight">Math</span>.<span class="yellow">round</span>(1000 * <span class="greenLight">Math</span>.<span class="yellow">random</span>()) % n;
+    } <span class="purple">while</span>(!<span class="blue">this</span>.<span class="yellow">is_good</span>());
+};
+
+<span class="greenLight">Queens</span>.<span class="blueLight">prototype</span>.<span class="yellow">show_table</span> = <span class="blue">function</span>() {
+    <span class="blue">var</span> n = <span class="blue">this</span>.n, row = <span class="blue">this</span>.row, diw = <span class="blue">this</span>.odom;
+    <span class="blue">var</span> diag = <span class="blueLight">document</span>.<span class="yellow">createElement</span>('table');
+    <span class="blueLight">diag</span>.<span class="yellow">setAttribute</span>(<span class="orange">'class'</span>, <span class="orange">'diag'</span>);
+
+    <span class="blue">var</span> <span class="blueLight">TR</span> = <span class="blueLight">document</span>.<span class="yellow">createElement</span>(<span class="orange">'tr'</span>); <span class="gray">// noduri care vor fi apoi clonate,</span>
+    <span class="blue">var</span> <span class="blueLight">TH</span> = <span class="blueLight">document</span>.<span class="yellow">createElement</span>(<span class="orange">'th'</span>); <span class="gray">// evitând recrearea lor</span>
+    <span class="blue">var</span> <span class="blueLight">TD</span> = <span class="blueLight">document</span>.<span class="yellow">createElement</span>(<span class="orange">'td'</span>);
+    <span class="blue">var</span> <span class="blueLight">SQ</span> = <span class="blueLight">document</span>.<span class="yellow">createElement</span>(<span class="orange">'img'</span>);
+    SQ.setAttribute(<span class="orange">'src'</span>, <span class="orange">"static/wqueen.png"</span>);
+    <span class="blue">var</span> <span class="blueLight">DIV</span> = <span class="blueLight">document</span>.<span class="yellow">createElement</span>(<span class="orange">'div'</span>);;
+    
+    <span class="blue">var</span> drow, cell, dsq, i, j;
+        
+    <span class="blue">var</span> tbody = <span class="blueLight">document</span>.<span class="yellow">createElement</span>(<span class="orange">'tbody'</span>); <span class="gray">// fără secţiuni THEAD, TFOOT </span>
+    <span class="purple">for</span>(i = 0; i &lt; n; i++) {
+        drow = TR.<span class="yellow">cloneNode</span>(<span class="blue">true</span>);
+        <span class="purple">for</span>(j = 0; j &lt; n; j++) {
+            cell = <span class="blueLight">TD</span>.<span class="yellow">cloneNode</span>(<span class="blue">true</span>);
+            dsq = <span class="blueLight">DIV</span>.<span class="yellow">cloneNode</span>(<span class="blue">true</span>);
+            <span class="purple">if</span>(row[j] == i)
+                dsq.<span class="yellow">appendChild</span>(<span class="blueLight">SQ</span>.<span class="yellow">cloneNode</span>(<span class="blue">true</span>));
+            cell.<span class="yellow">appendChild</span>(dsq);
+            drow.<span class="yellow">appendChild</span>(cell);
+        }
+        tbody.<span class="yellow">appendChild</span>(drow);
+    }
+    diag.<span class="yellow">appendChild</span>(tbody);
+    diw.<span class="yellow">appendChild</span>(diag);
+};
+
+<span class="greenLight">Queens</span>.<span class="blueLight">prototype</span>.<span class="yellow">run</span> = <span class="blue">function</span>() { <span class="gray">// un shortcut pentru lansarea rezolvării </span>
+    <span class="blue">this</span>.<span class="yellow">set_queen</span>();
+    <span class="blue">this</span>.<span class="blueLight">odom.innerHTML</span>=<span class="orange">""</span>;
+    <span class="blue">this</span>.<span class="yellow">show_table</span>();
+}
+</p></pre>
+		
+		
+	<div class="subtitlu">Metoda backtracking</div>
+			<p class="paragraf">
+				Trebuie doar să extindem obiectul Queens definit mai sus, cu o nouă metodă "is_good" (fiindcă prima operează pe întregul vector ROW[], ori acum trebuie să testăm fiecare soluţie "parţială") şi cu o metodă care să asigure mecanismul backtracking:
+			</p>
+			<br>
+<pre><p class="cod" contentEditable="true"><span class="greenLight">Queens</span>.<span class="blueLight">prototype</span>.<span class="yellow">is_good_back</span> = <span class="blue">function</span>(col) { 
+ <span class="blue">var</span> row = <span class="blue">this</span>.row;
+    <span class="purple">if</span>(col == 0) <span class="purple">return</span> 1;
+    <span class="purple">for</span>( <span class="blue">var</span> i = 0; i &lt; col; i++)
+        <span class="purple">if</span>(row[i] == row[col] || <span class="greenLight">Math</span>.<span class="yellow">abs</span>(row[i] - row[col]) == col - i)
+            <span class="purple">return</span> 0;
+    <span class="purple">return</span> 1;
+}
+<span class="greenLight">Queens</span>.<span class="blueLight">prototype</span>.<span class="yellow">back</span> = <span class="blue">function</span>(col) { 
+<span class="purple">for</span>( <span class="blue">var</span> to = 0; to &lt; <span class="blue">this</span>.n; to++) {
+        <span class="blue">this</span>.row[col] = to;
+        <span class="purple">if</span>(<span class="blue">this</span>.<span class="yellow">is_good_back</span>(col)) {
+            <span class="purple">if</span>(col == <span class="blue">this</span>.n - 1) 
+                <span class="blue">this</span>.<span class="yellow">show_table</span>();
+            <span class="purple">else</span> <span class="blue">this</span>.<span class="yellow">back</span>(col + 1);
+        }
+    }
+}
+</p></pre>
+	<br>		
+	</div>
+
+</div>		
+
+	
+<div id="mybutton">
+<a href="#probleme"><button class="arrow"></button></a>
+</div>	
+	
+<nav>
+	
+	<! -- sidebar -->
+  <div class="sidebar">
+    <div class="logo-details">
+        <div class="logo_name">Backtracking</div>
+        <i class="bx bx-menu" id="btn" ></i>
+    </div>
+    <ul class="nav-list">
+      <li>
+        <a href="Principala.html">
+          <i class="bx bx-home"></i>
+          <span class="links_name">Acasă</span>
+        </a>
+         <span class="tooltip">Acasă</span>
+      </li>
+      <li>
+       <a href="Algoritm.html">
+         <i class="bx bx-notepad" ></i>
+         <span class="links_name">Algoritm</span>
+       </a>
+       <span class="tooltip">Algoritm</span>
+     </li>
+     <li>
+       <a href="Permutari.html">
+         <i class="bx bx-pencil" ></i>
+         <span class="links_name">Exerciții</span>
+       </a>
+       <span class="tooltip">Exerciții</span>
+     </li>
+     <li>
+       <a href="ProblemaDamelor.html">
+         <i class="bx bx-code-alt" ></i>
+         <span class="links_name">Aplicație</span>
+       </a>
+       <span class="tooltip">Aplicație</span>
+     </li>
+     <li>
+       <a href="ProblemaDamelorJavaScript.html">
+         <i class="bx bxl-javascript" type="logo" ></i>
+         <span class="links_name">JavaScript</span>
+       </a>
+       <span class="tooltip">JavaScript</span>
+     </li>
+     <li>
+       <a href="Test.html">
+         <i class="bx bx-edit" ></i>
+         <span class="links_name">Test</span>
+       </a>
+       <span class="tooltip">Test</span>
+     </li> 
+     <li>
+       <a href="Sudoku.html">
+         <i class="bx bx-game" ></i>
+         <span class="links_name">Sudoku</span>
+       </a>
+       <span class="tooltip">Sudoku</span>
+     </li> 
+     <li>
+      <a href="PieChart.html">
+        <i class="bx bx-bar-chart-square" ></i>
+        <span class="links_name">Grafice</span>
+      </a>
+      <span class="tooltip">Grafice</span>
+    </li>
+    </ul>
+  </div>
+	
+</nav>
+	
+
+<script src="js/sidebar.js"></script>
+<script src="js/nQueens.js"></script>
+	
+</body>
+</html>

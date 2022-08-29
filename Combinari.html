@@ -1,0 +1,305 @@
+<!doctype html>
+<html>
+<head>
+	<title>Combinări</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/Probleme.css">
+	  <link rel="stylesheet" href="css/sidebar2.css">
+	  
+    <!-- Boxicons Link -->
+    <link href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+	
+	
+<div class="middle" align="center">
+	
+	
+	<table id="probleme">
+		<tr>
+			<td><a href="Permutari.html"><button class="buttonTop">Generare permutări</button> </a></td>
+			<td> <a href="Aranjamente.html"><button class="buttonTop">Generare aranjamente</button></a></td>
+			<td> <a href="Combinari.html"><button class="buttonTop">Generare combinări</button></a></td>
+			<td><a href="Submultimi.html"><button class="buttonTop">Generare submulțimi</button></a></td>
+		</tr>
+	</table>
+	
+	<div class="titlu2">Generarea combinărilor</div>
+	<!-- Introducere -->
+	<div class="diviziune">
+		<br><br>
+		<div class="subtitlu">Introducere</div>
+		<div class="paragraf">
+			<p>
+				Consideram o mulțime cu <b class="box">&nbsp;A &nbsp;</b> cu <b class="box">&nbsp;n &nbsp;</b> elemente. Prin <b>combinări de <b class="box">&nbsp;k &nbsp;</b> elemente</b> din <b class="box">&nbsp;A &nbsp;</b> <b>înțelegem submulțimile cu <b class="box">&nbsp;k &nbsp;</b> elemente ale multimii </b><b class="box">&nbsp;A &nbsp;</b>. Numărul acestor combinări este <span class="pink">C<sup>k</sup><sub>n</sub>=A<sup>k</sup><sub>n</sub>/P<sub>k</sub>. </span>
+				<br><br>
+				Această pagină prezintă un algoritm backtracking pentru determinarea în ordine lexicografică a combinărilor de <b class="box">&nbsp;k &nbsp;</b> elemente ale mulțimii <b class="box">A={1 , 2 , ... , n}</b>, elemente dintr-o combinare fiind generate în ordine crescătoare. El poate fi adaptat pentru determinarea combinărilor de <b class="box">&nbsp;k &nbsp;</b> elemente ale unei mulțimi oarecare de <b class="box">&nbsp;n &nbsp;</b> elemente.
+				<br><br>
+				Deoarece în <a href="Algoritm.html">algoritmul recursiv general</a> apare funcția <b class="box">Back()</b> cu parametrul <b class="box">&nbsp;k &nbsp;</b>, pentru a păstra notațiile din algoritm vom considera în continuare combinările de <b class="box">&nbsp;k &nbsp;</b> elemente luate câte <b class="box">&nbsp;p &nbsp;</b>.
+				<br><br>
+			
+				
+		<div class="subtitlu"> Soluția 1 </div><br>
+			<br>
+			<div class="subtitlu2"> Condiții </div>
+			<br>	
+			Ca orice rezolvare cu algoritmul backtracking, începem prin a preciza semnificația vectorului soluție. Astfel, <b class="box">x[ ]</b> reprezintă o combinare. În consecință, el va respecta următoarele condiții:
+			<ul>
+				<li class="lista1">elementele  vectorului sunt valori cuprinse între <b class="box">&nbsp;1&nbsp; </b> și <b class="box">&nbsp;n &nbsp; </b>;</li>
+				<li class="lista1">elementele nu se repetă; </li>
+				<li class="lista1">elementele sunt ordonate crescător;</li>
+				<li class="lista1">vectorul <b class="box">&nbsp;x[ ]&nbsp; </b> se completează element cu element. Când va avea <b class="box">&nbsp;p &nbsp;</b> elemente, reprezintă o combinare completă, care urmează a fi afișată.</li>
+			</ul>
+			<br><br>
+			Formal, exprimăm proprietățile de mai sus astfel:
+			<br>
+			<ul>
+				<li class="lista1"> <b>condiții externe:</b> <b class="box">x[k] ∈ {1,2,...,n}</b> </li>
+				<li class="lista1"> <b>condiții interne:</b> 
+					<ul>
+						<li class="lista2"> <b class="box">x[k] ∉ {x[1],x[2],...,x[k−1]}</b>, pentru <b class="box">k ∈ {2,3,...,n}</b></li>
+						<li class="lista2"> <b class="box">x[k] &gt; x[k−1] </b> , pentru <b class="box">k ∈ {2,3,...,n}</b> </li>
+					</ul>
+				</li>
+				
+				<li class="lista1"> <b>condiții de existență a soluției:</b> <b class="box">k = p</b></li>
+				</ul>
+			
+			<br><br>
+						
+		
+			<div class="info">
+				<ul>
+					<li>Observăm (din nou) că în verificarea condițiilor interne intervine doar elementul <b class="box">x[k]</b> (cel care este verificat) și elementele deja generate 
+					<br>(<b class="box">x[1],x[2],...,x[k−1]</b>).</li>
+				</ul>	
+			</div>
+			<br><br>	
+			<div class="warning">
+			<ul>
+				<li>Observăm că aceste condiții sunt cele de la <a href="Aranjamente.html">generarea aranjamentelor</a>, la care se adaugă condiția internă legată de ordinea elementelor din vector. În consecință, programul va fi cel de la aranjamente, cu completarea funcției <b class="box">OK()</b>.</li>
+			</ul>	
+			</div>	
+			
+			
+			<br><br>
+			
+			<div class="subtitlu2"> Sursa C++ </div>
+			<br><br>
+<pre><p class="cod" contentEditable="true"><span class="purple">#include</span> <span class="orange">&lt;iostream&gt;</span>
+<span class="purple">using</span> <span class="blue">namespace</span> <span class="greenLight">std</span>;
+
+<span class="blue">int</span> <span class="blueLight">x</span>[10] ,n, p;
+
+<span class="blue">void</span> <span class="yellow">Afis</span>(<span class="blue">int</span> <span class="blueLight">k</span>)
+{
+    <span class="purple">for</span>( <span class="blue">int</span> j=1;j&lt;=k;j++)
+        cout&lt;&lt;<span class="blueLight">x</span>[j]&lt;&lt;<span class="orange">&quot; &quot;</span>;
+    cout&lt;&lt;endl;
+}
+
+<span class="blue">bool</span> <span class="yellow">OK</span>(<span class="blue">int</span> <span class="blueLight">k</span>){
+	<span class="purple">for</span>(<span class="blue">int</span> i=1;i&lt;k;++i)
+		<span class="purple">if</span>(<span class="blueLight">x</span>[k]==<span class="blueLight">x</span>[i])
+			<span class="purple">return</span> <span class="blue">false</span>;
+	<span class="purple">if</span>(k &gt; 1)
+		<span class="purple">if</span>(<span class="blueLight">x</span>[k]&lt;=<span class="blueLight">x</span>[k-1])
+			<span class="purple">return</span> <span class="blue">false</span>;		
+	<span class="purple">return</span> <span class="blue">true</span>;
+}
+
+<span class="blue">bool</span> <span class="yellow">Solutie</span>(int <span class="blueLight">k</span>)
+{
+    <span class="purple">return</span> k == p;
+}
+
+<span class="blue">void</span> <span class="yellow">back</span>(<span class="blue">int</span> <span class="blueLight">k</span>){
+    <span class="purple">for</span>(<span class="blue">int</span> i = 1 ; i &lt;= n ; ++i)
+    {
+        <span class="blueLight">x</span>[k]=i;
+        <span class="purple">if</span>( <span class="yellow">OK</span>(k) )
+            <span class="purple">if</span>(<span class="yellow">Solutie</span>(k))
+                <span class="yellow">Afis</span>(k);
+            <span class="purple">else</span>
+                <span class="yellow">back</span>(k+1);
+    }
+}
+<span class="blue">int</span> <span class="yellow">main</span>(){
+    cin&gt;&gt;n&gt;&gt;p;
+    <span class="yellow">back</span>(1);
+    <span class="purple">return</span> 0;
+}</p></pre>	
+			
+			
+			<br><br><br>
+			<div class="subtitlu"> Soluția 2 </div><br>
+			<br>
+			<div class="subtitlu2"> Rafinarea condițiilor </div>
+			<br>	
+			Condițiile de mai sus pot fi îmbunătățite, făcând următoarele observații:
+			<br><br>
+			<ol type="1">
+				<li class="lista1">
+					cele două condiții interne pot fi reduse la una singură. Dacă pentru fiecare k are loc relația <b class="box">x[k] &gt; x[k−1] </b> atunci are loc și condiția <b class="box">x[k]∉{x[1],x[2],…,x[k−1]}</b>;
+					Condițiile devin:
+					<ul>
+						<li class="lista2"><b>condiții externe:</b> <b class="box">x[k] ∈ {1,2,...,n}</b> </li>
+						<li class="lista2"><b>condiții interne:</b> <b class="box">x[k] &gt; x[k−1] </b>, pentru <b class="box"> k &gt; 1 </b> </li>
+						<li class="lista2"><b>condiții de existență a soluției:</b> <b class="box">k = p</b> </li>
+					</ul>
+				</li>
+				
+				<li class="lista1">  
+					condiția internă poate fi transformată în condiție externă. Dacă x[k] &gt; <b class="box">x[k−1]</b> atunci valorile pe care le poate lua x[k] (condiții externe) sunt <b class="box">{x[k−1]+1,…,n}</b>. Condițiile devin:
+					<ul>
+						<li class="lista2"><b>condiții externe:</b> <b class="box">x[k] ∈ {x[k−1]+1,x[k−1]+2,…,n}</b> </li>
+						<li class="lista2"><b>condiții interne:</b> nu există </li>
+						<li class="lista2"> <b>condiții de existență a soluției:</b> <b class="box">k = p</b></li>
+					</ul>
+				</li>
+			</ol>
+			<br>
+			Cazul <b class="box">k=1</b> este unul special. Valorile pe care le poate lua sunt <b class="box">{1,2,3,…}</b>. Pentru a fi condițiile externe de mai sus corecte în în acest caz, este necesară inițializarea <b class="box"> x[ 0 ] = 0</b>, înaintea începerii generării.
+			
+			<br><br>
+			
+			<div class="subtitlu2"> Sursa C++ </div>
+			<br>
+			
+<pre><p class="cod" contentEditable="true"><span class="purple">#include</span> <span class="orange">&lt;iostream&gt;</span>
+<span class="purple">using</span> <span class="blue">namespace</span> <span class="greenLight">std</span>;
+
+<span class="blue">int</span> <span class="blueLight">x</span>[10] ,n, p;
+
+<span class="blue">void</span> <span class="yellow">Afis</span>(<span class="blue">int</span> <span class="blueLight">k</span>){
+    <span class="purple">for</span>( <span class="blue">int</span> j=1;j&lt;=k;j++)
+        cout&lt;&lt;<span class="blueLight">x</span>[j]&lt;&lt;<span class="orange">&quot; &quot;</span>;
+    cout&lt;&lt;endl;
+}
+
+<span class="blue">void</span> <span class="yellow">back</span>(<span class="blue">int</span> <span class="blueLight">k</span>){
+    <span class="purple">for</span>(<span class="blue">int</span> i = <span class="blueLight">x</span>[k-1] + 1 ; i &lt;= n ; i++){
+    <span class="blueLight">x</span>[k]=i;
+    <span class="purple">if</span>(k == p)
+        <span class="yellow">Afis</span>(k);
+    <span class="purple">else</span>
+        <span class="yellow">back</span>(k+1);
+    } 
+}
+
+<span class="blue">int</span> <span class="yellow">main</span>(){
+    cin&gt;&gt;n&gt;&gt;p;
+    <span class="blueLight">x</span>[0] = 0;
+    <span class="yellow">back</span>(1);
+    <span class="purple">return</span> 0;
+}</p></pre>
+			
+		
+			
+			<br><br><br><br><br><br><br><br>
+		<div class="subtitlu">Probleme propuse</div>
+		<br><br>
+			<div class="enunt">
+			<ol type="1">
+				<li class="lista1"> Se citesc două numere naturale nenule <b class="box">&nbsp;n&nbsp;</b> și <b class="box">&nbsp;m&nbsp;</b>. Afișați în ordine lexicografică toate submulțimile cu <b class="box">&nbsp;m&nbsp;</b> elemente ale mulţimii <b class="box">{1,2,..,n}</b> în care nu există două elemente pare alăturate.</li>
+				<li class="lista1"> Se citesc două numere naturale nenule <b class="box">&nbsp;n&nbsp;</b> și <b class="box">&nbsp;m&nbsp;</b>. Să se determine toate şirurile cu <b class="box">&nbsp;m&nbsp;</b> elemente din mulţimea <b class="box">{1,2,..,n}</b> ordonate strict crescător, cu proprietatea că oricare două elemente consecutive în şir au diferenţa mai mică sau egală cu cu <b class="box">&nbsp;2&nbsp;</b>.</li>
+				<li class="lista1"> Se citeşte un număr natural <b class="box">&nbsp;n&nbsp;</b>. Calculați și afișați câte din submulțimile mulțimii <b class="box">{1,2,..,n}</b> sunt formate dintr-un număr impar de elemente.</li>
+				<li class="lista1"> Să se determine toate submulţimile cu <b class="box">&nbsp;m&nbsp;</b> elemente ale mulţimii divizorilor unui număr natural dat. </li>
+				<li class="lista1"> Se citeşte un număr natural <b class="box">&nbsp;n&nbsp;</b> având cifrele diferite două câte două și o cifră <b class="box">&nbsp;c&nbsp;</b>. Afișați în ordine descrescătoare numerele formate din <b class="box">&nbsp;c&nbsp;</b> cifre distincte care se pot obține din cifrele lui  <b class="box">&nbsp;n&nbsp;</b> și care au cifrele ordonate crescător.</li>
+			</ol>
+			</div>	
+		<br><br><br>
+			
+	
+			
+		</p></div>
+		
+	
+	</div>  <!-- Inchidere diviziune introducere -->
+	
+</div>		
+	
+<div id="mybutton">
+<a href="#probleme"><button class="arrow"></button></a>
+</div>		
+	
+<nav>
+	
+	<! -- sidebar -->
+  <div class="sidebar">
+    <div class="logo-details">
+        <div class="logo_name">Backtracking</div>
+        <i class="bx bx-menu" id="btn" ></i>
+    </div>
+    <ul class="nav-list">
+      <li>
+        <a href="Principala.html">
+          <i class="bx bx-home"></i>
+          <span class="links_name">Acasă</span>
+        </a>
+         <span class="tooltip">Acasă</span>
+      </li>
+      <li>
+       <a href="Algoritm.html">
+         <i class="bx bx-notepad" ></i>
+         <span class="links_name">Algoritm</span>
+       </a>
+       <span class="tooltip">Algoritm</span>
+     </li>
+     <li>
+       <a href="Permutari.html">
+         <i class="bx bx-pencil" ></i>
+         <span class="links_name">Exerciții</span>
+       </a>
+       <span class="tooltip">Exerciții</span>
+     </li>
+     <li>
+       <a href="ProblemaDamelor.html">
+         <i class="bx bx-code-alt" ></i>
+         <span class="links_name">Aplicație</span>
+       </a>
+       <span class="tooltip">Aplicație</span>
+     </li>
+     <li>
+       <a href="ProblemaDamelorJavaScript.html">
+         <i class="bx bxl-javascript" type="logo" ></i>
+         <span class="links_name">JavaScript</span>
+       </a>
+       <span class="tooltip">JavaScript</span>
+     </li>
+     <li>
+       <a href="Test.html">
+         <i class="bx bx-edit" ></i>
+         <span class="links_name">Test</span>
+       </a>
+       <span class="tooltip">Test</span>
+     </li> 
+     <li>
+       <a href="Sudoku.html">
+         <i class="bx bx-game" ></i>
+         <span class="links_name">Sudoku</span>
+       </a>
+       <span class="tooltip">Sudoku</span>
+     </li> 
+	 <li>
+		<a href="PieChart.html">
+		  <i class="bx bx-bar-chart-square" ></i>
+		  <span class="links_name">Grafice</span>
+		</a>
+		<span class="tooltip">Grafice</span>
+	  </li>
+    </ul>
+  </div>
+	
+</nav>
+	
+	
+<script src="js/sidebar.js"></script>
+	
+</body>
+</html>
+
+
+			

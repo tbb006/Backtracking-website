@@ -1,0 +1,266 @@
+@charset "utf-8";
+/* CSS Document */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
+.body{
+	background: #A8A8A8;
+}
+
+#probleme{
+	cursor: pointer;
+	margin: 0 auto;
+	border:2px solid #1B1B1B;
+	border-collapse: collapse;
+	background: #1B1B1B;
+	color: #DDDDDD;
+	text-align: center;
+	width: 100%;
+	height: 70px;
+}
+
+.probleme{
+	cursor: pointer;
+	margin: 0 auto;
+	border:2px solid #1B1B1B;
+	border-collapse: collapse;
+	background: #1B1B1B;
+	color: #DDDDDD;
+	text-align: center;
+	width: 25%;
+	height: 70px;
+}
+
+.buttonTop{
+	border:none;
+	background: #2E2E2E;
+	color:aliceblue;
+ 	height: 52px;
+ 	font-size: 18px;
+	width: 99%;
+	border-radius: 12px;
+}
+
+.middle{
+	width: 96%;
+	background-color: #E1E1E1;
+	height: 100%;
+	float: right;
+	align-content: center;
+	
+}
+
+
+#titlu {
+	margin-top: 4%;
+	background-clip: text;
+	font-size: 36px;
+	color: #1E1E1E; 
+}
+
+
+.subtitlu{
+	text-align: left;
+	margin-top: 7%;
+	font-size: 26px;
+	font-family: "Poppins" , sans-serif;
+	color: #252525; 
+}
+
+.diviziune{
+	width: 72%;
+	margin: 0 auto;
+}
+
+#diviziune{
+	width: 72%;
+	margin: 0 auto;
+}
+
+#introducere{
+	width: 72%;
+	margin: 0 auto;
+}
+
+#rezolvare{
+	width: 72%;
+	margin: 0 auto;
+}
+
+#implementare{
+	width: 72%;
+	margin: 0 auto;
+}
+
+table, th, td {
+	border: 2px solid #AFAFAF;
+	border-collapse: collapse;
+}
+
+.imagine{
+	width: 100%;
+}
+
+
+.Black{
+	display: inline-block;
+	font-family: "Poppins" , sans-serif;
+	color:  rgb(51, 51, 51);
+	font-size: 19px;
+}
+
+.input{
+	background: rgb(51, 51, 51);
+	color: white;
+	border: 2px solid #AFAFAF;
+	border-radius: 3px;
+    text-align: center;
+	height: 30px;
+	font-size: 20px;
+	font-family: "Poppins" , sans-serif;
+}
+
+.button{
+	background-color: #C7C7C7;
+	color: #171717;
+    width: 100px;
+	height: 35px;
+    border-radius: 3px;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    margin: 0 auto;
+    font-size: 18px;
+    cursor: pointer;
+    font-family: "Poppins" , sans-serif;
+}
+
+.button:hover{
+	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+.button:active {
+  background-color: rgb(51, 51, 51);
+	color: white;
+  transform: translateY(4px);
+}
+
+#diagrama1 table{
+	background-color: rgb(51, 51, 51);
+}
+
+.paragraf{
+	margin-top: 1%;
+	color: #222222; 
+	font-size: 17px; 
+	line-height: 20px; 
+	text-align: justify;
+	font-family: "Poppins" , sans-serif;
+}
+
+
+.box{
+	display: inline-block;
+	height: 23px;
+	font-family: 'Gabriela', serif;
+	color: #D6365F;
+	font-size: 17px;
+	border-radius: 6px;
+	background: #F2DCE3;
+}
+
+.red{
+	color:#D21003;
+}
+
+pre {
+    white-space: pre-wrap;       /* Since CSS 2.1 */
+    white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+    white-space: -pre-wrap;      /* Opera 4-6 */
+    white-space: -o-pre-wrap;    /* Opera 7 */
+    word-wrap: break-word;       /* Internet Explorer 5.5+ */
+} 
+
+.cod {
+	border: 2px solid black; 
+	border-collapse: collapse;
+	background: #373737;
+	padding: 1.5%;
+	color: #E3E3E3; 
+	font-size: 16px; 
+	line-height: 22px; 
+	text-align: justify;
+	font-family: "Consolas" , sans-serif;
+}
+
+.black{
+	color: black; 
+	font-size: 16px; 
+	line-height: 22px; 
+	text-align: justify;
+	font-family: "Consolas" , sans-serif;
+}
+
+.yellow{
+	color: #FFFEA5; 
+	font-size: 16px; 
+	line-height: 22px; 
+	text-align: justify;
+	font-family: "Consolas" , sans-serif;
+}
+
+.blue{
+	color: #546FED; 
+	font-size: 16px; 
+	line-height: 22px; 
+	text-align: justify;
+	font-family: "Consolas" , sans-serif;
+}
+
+.blueLight{
+	color: #15C6E2; 
+	font-size: 16px; 
+	line-height: 22px; 
+	text-align: justify;
+	font-family: "Consolas" , sans-serif;
+}
+
+.purple{
+	color: #BC59EE; 
+	font-size: 16px; 
+	line-height: 22px; 
+	text-align: justify;
+	font-family: "Consolas" , sans-serif;
+}
+
+.green{
+	color: #228A21; 
+	font-size: 16px; 
+	line-height: 22px; 
+	text-align: justify;
+	font-family: "Consolas" , sans-serif;
+}
+
+.greenLight{
+	color: #33CC8B; 
+	font-size: 16px; 
+	line-height: 22px; 
+	text-align: justify;
+	font-family: "Consolas" , sans-serif;
+}
+
+.gray{
+	color: #9B9B9B; 
+	font-size: 16px; 
+	line-height: 22px; 
+	text-align: justify;
+	font-family: "Consolas" , sans-serif;
+}
+
+.orange{
+	color: #F09557; 
+	font-size: 16px; 
+	line-height: 22px; 
+	text-align: justify;
+	font-family: "Consolas" , sans-serif;
+}
+

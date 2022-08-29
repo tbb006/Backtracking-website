@@ -1,0 +1,286 @@
+<!doctype html>
+<html>
+  <head>
+	<title>Problema Reginelor</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/ProblemaDamelor.css">
+	  <link rel="stylesheet" href="css/sidebar2.css">
+	  
+    <!-- Boxicons Link -->
+    <link href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   </head>
+
+<body>
+	
+<div class="middle" align="center">
+	
+<table id="probleme">
+		<tr>
+			<td class="probleme"><a href="#diviziune"><button class="buttonTop">Introducere</button> </a></td>
+			<td class="probleme"> <a href="#exemplu"><button class="buttonTop">Exemplu</button></a></td>
+			<td class="probleme"> <a href="#algoritm1"><button class="buttonTop">Algoritm C++</button></a></td>
+			<td class="probleme"><a href="#algoritm2"><button class="buttonTop">Algoritm JavaScript</button></a></td>
+		</tr>
+</table>	
+	
+	<div id="titlu">Problema celor n regine</div>
+	<!-- Introducere -->
+	<div id="diviziune">
+		
+		<div class="subtitlu">I. Introducere </div> <br>  
+		<div class="paragraf">
+		<p><b>
+			Problema reginelor</b>(sau <b>problema damelor</b>) tratează plasarea a opt regine de șah pe o tablă de șah astfel încât să nu existe două regine care se amenință reciproc. Așadar, se caută o soluție astfel încât nicio pereche de două regine să nu fie pe același rând, pe aceeași coloană, sau pe aceeași diagonală. Problema cu opt regine este doar un caz particular pentru problema generală, care presupune plasarea a n regine pe o tablă de șah n×n în aceleași condiții. Pentru această problemă, există soluții pentru toate numerele naturale n cu excepția lui n=2 și n=3.
+		</p>
+		
+		<div class="subtitlu">II. Istorie </div> <br>
+		<div class="paragraf">
+		<p>
+			Compozitorul de șah⁠,<span class="red"> Max Bezzel⁠</span>, a publicat problema celor opt regine în 1848.<span class="red"> Franz Nauck</span> a publicat primele soluții în 1850. Acesta a și extins problema la n regine, cu n regine pe o tablă de șah de n × n pătrate.
+			<br>
+			De atunci, mulți matematicieni, inclusiv <span class="red">Carl Friedrich Gauss</span>, au lucrat atât la problema inițială cu opt regine cât și la varianta generalizată cu n regine. În 1874,<span class="red"> S. Gunther</span> a propus o metodă care utilizează determinanții pentru a găsi soluții. <span class="red">J. W. L. Glaisher</span>⁠ a rafinat abordarea lui Gunther.
+			<br>
+			În 1972, <span class="red">Edsger Dijkstra</span> a folosit această problemă pentru a ilustra puterea a ceea ce el numește programare structurată. El a publicat o descriere foarte detaliată a unui <a href="Algoritm.html">algoritm backtracking</a> de parcurgere în adâncime.
+		</p>
+		</div>
+			
+		<div class="subtitlu">III. Construcția soluției </div> <br>
+		<div class="paragraf">
+		<p>
+			Problema poate fi destul de costisitoare computațional, întrucât sunt 4426165368 (adică, <span class="box"><sub>64</sub>C<sub>8</sub></span>) <a href="Aranjamente.html">aranjamente</a> posibile ale celor opt regine pe o tablă 8×8, dar numai 92 de soluții. Se pot utiliza scurtături care reduc cerințele de calcul, sau reguli aproximative, care evită căutarea cu forța brută. De exemplu, aplicând o regulă simplă, care constrânge fiecare regină să stea pe coloana (sau rândul) ei, deși încă se consideră că se folosește forța brută, se poate reduce numărul de posibilități la 16777216 (88) combinații posibile. <a href="Permutari.html"> Generarea de permutări</a> reduce și mai mult posibilitățile la 40320 (adică 8!), care sunt apoi verificate dacă damele nu se atacă pe diagonală.
+			<br><br>
+			<b>Soluții:</b>
+			<br><br>
+			Problema cu opt regine are <span class="red">92 de soluții distincte</span>. Daca soluțiile care diferă numai prin operațiunile de simetrie (rotație și reflexie a tablei) sunt considerate a fi una singură, problema are <span class="red">12 soluții</span>. Acestea sunt numite soluții fundamentale; mai jos sunt prezentate reprezentante ale fiecăreia.
+			<br><br>
+			O soluție fundamentală are, de obicei, opt variante (inclusiv forma sa originală) obținute prin rotirea cu 90, 180 sau 270° și apoi reflexia fiecăreia dintre cele patru variante într-o oglindă într-o poziție fixă. Cu toate acestea, dacă o soluție este echivalentă cu propria rotire la 90° (cum se întâmplă cu o soluție cu cinci regine pe o tablă 5×5), ca soluție fundamentală va avea doar două variante (ea însăși și reflexia sa). Dacă o soluție este echivalentă cu propria rotație la 180° (dar nu cu rotația la 90°), va avea patru variante (ea însăși și reflexia sa, rotirea la 90° și reflexia sa). Dacă n &gt; 1, nu este posibil ca o soluție să fie echivalentă cu propria reflexie pentru că aceasta ar impune ca două regine să fie una în fața alteia. Din cele 12 soluții fundamentale la problema cu opt regine pe o tablă 8×8, exact una (soluția 12 de mai jos) este egală cu propria rotație la 180°, și niciuna nu este egală cu rotația la 90°; astfel, numărul de soluții distincte este 11×8 + 1×4 = 92 (unde 8 rezultă din cele patru poziții de rotație la 90° și reflexiile lor, iar 4 rezultă din din două poziții de rotație la 180° și reflexiile lor).
+		</p>
+		</div>	
+	
+			<br><br><br>
+			<table width="100%">
+			  	<tr>
+					<td><img src="multimedia/Solutia1.png" class="imagine"></td>
+					<td><img src="multimedia/Solutia2.png" class="imagine"></td>
+					<td><img src="multimedia/Solutia3.png" class="imagine"></td>
+					<td><img src="multimedia/Solutia4.png" class="imagine"></td>
+			  	</tr>
+			  	<tr>
+					<td><img src="multimedia/Solutia5.png" class="imagine"></td>
+					<td><img src="multimedia/Solutia6.png" class="imagine"></td>
+					<td><img src="multimedia/Solutia7.png" class="imagine"></td>
+					<td><img src="multimedia/Solutia8.png" class="imagine"></td>
+			  	</tr>
+				<tr>
+					<td><img src="multimedia/Solutia9.png" class="imagine"></td>
+					<td><img src="multimedia/Solutia10.png" class="imagine"></td>
+					<td><img src="multimedia/Solutia11.png" class="imagine"></td>
+					<td><img src="multimedia/Solutia12.png" class="imagine"></td>
+			  	</tr>
+			</table>
+		</div>			
+    
+    <br>
+
+	<div id="exemplu">
+      <audio controls> 
+        <source src="multimedia/nRegine.wav" type="audio/wav">
+      </audio>
+      <br>
+	  	<video width="100%" controls>
+			<source src="multimedia/Backtracking.mp4" type="video/mp4">
+		</video>
+  		<br>	
+	</div>
+</div>	
+	
+
+	
+	
+	<div id="algoritm1">
+	<div class="subtitlu">Algoritm C++</div>
+	<br>
+<pre><p class="cod" contentEditable="true"><span class="purple">#include</span> <span class="orange">&lt;iostream&gt;</span>
+<span class="purple">#include</span> <span class="orange">&lt;cmath&gt;</span>
+<span class="purple">using</span> <span class="blue">namespace</span> <span class="greenLight">std</span>;
+
+<span class="blue">int</span> <span class="blueLight">v</span>[10] ,n, sol;
+
+<span class="blue">void</span> <span class="yellow">afisare</span>(){
+<span class="blue">int</span> i,j;
+sol++;
+cout&lt;&lt;<span class="orange">"Solutia:"</span>&lt;&lt;sol&lt;&lt;endl;
+<span class="purple">for</span>(i=1; i&lt;=n; i++){
+   <span class="purple">for</span>(j=1; j&lt;=n; j++)
+        <span class="purple">if</span>(<span class="blueLight">v</span>[i]==j)
+            cout&lt;&lt;<span class="orange">&quot;Q&quot;</span>;
+        <span class="purple">else</span>
+            cout&lt;&lt;<span class="orange">&quot;-&quot;</span>;
+    cout&lt;&lt;endl;
+   }
+}
+
+<span class="blue">int</span> <span class="yellow">valid</span>(<span class="blue">int</span> <span class="blueLight">k</span>){
+<span class="purple">for</span>(<span class="blue">int</span> i=1; i&lt;k; i++)
+   <span class="purple">if</span>(<span class="blueLight">v</span>[k]==<span class="blueLight">v</span>[i] || (<span class="yellow">abs</span>(<span class="blueLight">v</span>[k]-<span class="blueLight">v</span>[i])==(k-i)))
+       <span class="purple">return</span> <span class="blue">0</span>;
+<span class="purple">return</span> <span class="blue">1</span>;
+}
+
+<span class="blue">int</span> <span class="yellow">solutie</span>(int <span class="blueLight">k</span>){
+<span class="purple">if</span>(k == n)
+   <span class="purple">return</span> 1;
+<span class="purple">return</span> 0;
+}
+
+<span class="blue">void</span> <span class="yellow">back</span>(<span class="blue">int</span> <span class="blueLight">k</span>){
+<span class="purple">for</span>(<span class="blue">int</span> i = 1; i &lt;= n; i++){
+     <span class="blueLight">v</span>[k]=i;
+     <span class="purple">if</span>( <span class="yellow">valid</span>(k)==1)
+         <span class="purple">if</span>(<span class="yellow">solutie</span>(k)==1)
+              <span class="yellow">afisare</span>();
+         <span class="purple">else</span>
+              <span class="yellow">back</span>(k+1);
+    }
+}
+<span class="blue">int</span> <span class="yellow">main</span>(){
+cout&lt;&lt;<span class="orange">&quot;n=&quot;</span>;
+cin&gt;&gt;n;
+<span class="yellow">back</span>(1);
+<span class="purple">return</span> 0;
+}</p></pre>
+		
+</div>	
+	
+	<div id="algoritm2">
+	<div class="subtitlu">Algoritm JavaScript</div>
+	<br>
+<pre><p class="cod" contentEditable="true"><span class="blue">var</span> <span class="yellow">solveNQueens</span> = <span class="blue">function</span>(<span class="blueLight">n</span>) {
+    <span class="blue">const</span> <span class="blueLight">rezultat</span> = []
+    <span class="blue">const</span> <span class="blueLight">afisare</span> = <span class="greenLight">Array</span>(<span class="blueLight">n</span>).<span class="yellow">fill</span>(0).<span class="yellow">map</span>(_ <span class="blue">=&gt;</span>  <span class="greenLight">Array</span>(<span class="blueLight">n</span>).<span class="yellow">fill</span>(<span class="orange">'-'</span>))
+    
+    <span class="blue">const</span> <span class="blueLight">coloana</span> = <span class="greenLight">Array</span>(<span class="blueLight">n</span>).<span class="yellow">fill</span>(<span class="blue">false</span>)
+    <span class="blue">const</span> <span class="blueLight">diagonala1</span> = <span class="greenLight">Array</span>(<span class="blueLight">n</span> * 2 - 1).<span class="yellow">fill</span>(<span class="blue">false</span>)
+    <span class="blue">const</span> <span class="blueLight">diagonala2</span> = <span class="greenLight">Array</span>(<span class="blueLight">n</span> * 2 - 1).<span class="yellow">fill</span>(<span class="blue">false</span>)
+    
+    <span class="blue">const</span> <span class="yellow">put</span> = (<span class="blueLight">i</span>, <span class="blueLight">j</span>) <span class="blue">=&gt;</span>  {
+      <span class="blue">const</span> <span class="blueLight">indexD1</span> = <span class="blueLight">i</span> + <span class="blueLight">n</span> - <span class="blueLight">j</span> - 1
+      <span class="blue">const</span> <span class="blueLight">indexD2</span> = <span class="blueLight">i</span> + <span class="blueLight">j</span>
+      
+      <span class="purple">if</span> (<span class="blueLight">coloana</span>[<span class="blueLight">j</span>] || <span class="blueLight">diagonala1</span>[<span class="blueLight">indexD1</span>] || <span class="blueLight">diagonala2</span>[<span class="blueLight">indexD2</span>]) {
+        <span class="purple">return</span>
+      }
+      
+      <span class="blueLight">afisare</span>[<span class="blueLight">i</span>][<span class="blueLight">j</span>] = <span class="orange">'Q'</span>
+      <span class="blueLight">coloana</span>[<span class="blueLight">j</span>] = <span class="blue">true</span> 
+      <span class="blueLight">diagonala1</span>[<span class="blueLight">indexD1</span>] = <span class="blue">true</span> 
+      <span class="blueLight">diagonala2</span>[<span class="blueLight">indexD2</span>] = <span class="blue">true</span> 
+
+      <span class="purple">if</span> (<span class="blueLight">i</span> === <span class="blueLight">n</span> - 1) {
+        <span class="blueLight">rezultat</span>.<span class="yellow">push</span>(afisare.<span class="yellow">map</span>(row <span class="blue">=&gt;</span> row.<span class="yellow">join</span>(<span class="orange">''</span>)))
+      } <span class="purple">else</span> {
+        <span class="purple">for</span> (<span class="blue">let</span> <span class="blueLight">k</span> = 0; <span class="blueLight">k</span> &lt; <span class="blueLight">n</span> ; <span class="blueLight">k</span> ++) {
+          <span class="yellow">put</span>(<span class="blueLight">i</span> + 1, <span class="blueLight">k</span>)
+        }
+      }
+      
+      <span class="blueLight">afisare</span>[<span class="blueLight">i</span>][<span class="blueLight">j</span>] = <span class="orange">'-'</span>
+      <span class="blueLight">coloana</span>[<span class="blueLight">j</span>] = <span class="blue">false</span>
+      <span class="blueLight">diagonala1</span>[<span class="blueLight">indexD1</span>] = <span class="blue">false</span>
+      <span class="blueLight">diagonala2</span>[<span class="blueLight">indexD2</span>] = <span class="blue">false</span>
+   }
+  
+   <span class="purple">for</span> (<span class="blue">let</span> <span class="blueLight">k</span> = 0; <span class="blueLight">k</span> &lt; n ; <span class="blueLight">k</span> ++) {
+      <span class="yellow">put</span>(0, <span class="blueLight">k</span>)
+   }
+  
+   <span class="purple">return</span> <span class="blueLight">rezultat</span>
+};
+</p></pre>
+<br>
+</div>		
+	
+</div>
+
+
+
+<div id="mybutton">
+	<a href="#probleme"><button class="arrow"></button></a>
+</div>	
+	
+
+<nav>
+	
+	<! -- sidebar -->
+  <div class="sidebar">
+    <div class="logo-details">
+        <div class="logo_name">Backtracking</div>
+        <i class="bx bx-menu" id="btn" ></i>
+    </div>
+    <ul class="nav-list">
+      <li>
+        <a href="Principala.html">
+          <i class="bx bx-home"></i>
+          <span class="links_name">Acasă</span>
+        </a>
+         <span class="tooltip">Acasă</span>
+      </li>
+      <li>
+       <a href="Algoritm.html">
+         <i class="bx bx-notepad" ></i>
+         <span class="links_name">Algoritm</span>
+       </a>
+       <span class="tooltip">Algoritm</span>
+     </li>
+     <li>
+       <a href="Permutari.html">
+         <i class="bx bx-pencil" ></i>
+         <span class="links_name">Exerciții</span>
+       </a>
+       <span class="tooltip">Exerciții</span>
+     </li>
+     <li>
+       <a href="ProblemaDamelor.html">
+         <i class="bx bx-code-alt" ></i>
+         <span class="links_name">Aplicație</span>
+       </a>
+       <span class="tooltip">Aplicație</span>
+     </li>
+     <li>
+       <a href="ProblemaDamelorJavaScript.html">
+         <i class="bx bxl-javascript" type="logo" ></i>
+         <span class="links_name">JavaScript</span>
+       </a>
+       <span class="tooltip">JavaScript</span>
+     </li>
+     <li>
+       <a href="Test.html">
+         <i class="bx bx-edit" ></i>
+         <span class="links_name">Test</span>
+       </a>
+       <span class="tooltip">Test</span>
+     </li> 
+     <li>
+       <a href="Sudoku.html">
+         <i class="bx bx-game" ></i>
+         <span class="links_name">Sudoku</span>
+       </a>
+       <span class="tooltip">Sudoku</span>
+     </li> 
+     <li>
+      <a href="PieChart.html">
+        <i class="bx bx-bar-chart-square" ></i>
+        <span class="links_name">Grafice</span>
+      </a>
+      <span class="tooltip">Grafice</span>
+    </li>
+    </ul>
+  </div>
+	
+</nav>
+
+<script src="js/sidebar.js"></script>
+	
+</body>
+</html>
